@@ -1,190 +1,152 @@
-# Arquitetura do Sistema
+# 🏗️ Arquitetura do Sistema
 
 ## Visão Geral
 
-O Assistente Financeiro Inteligente utiliza uma arquitetura modular baseada em microsserviços e IA generativa.
-
-## Diagrama de Arquitetura
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Interface do Usuário                      │
-│                     (Streamlit Web App)                      │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Camada de Aplicação                        │
-├─────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   Chatbot    │  │ Calculadoras │  │     FAQs     │      │
-│  │    Engine    │  │  Financeiras │  │   Dinâmicas  │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  Camada de Serviços                          │
-├─────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  LLM Service │  │   Context    │  │    Data      │      │
-│  │ (GPT/Gemini) │  │   Manager    │  │   Analysis   │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Camada de Dados                            │
-├─────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   SQLite DB  │  │  Knowledge   │  │   Vector DB  │      │
-│  │  (Histórico) │  │     Base     │  │  (Embeddings)│      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-```
+O Assistente Financeiro é construído com uma arquitetura modular, permitindo escalabilidade e manutenção facilitada.
 
 ## Componentes Principais
 
-### 1. Interface do Usuário (UI)
-- **Framework**: Streamlit
+### 1. Interface do Usuário (Streamlit)
+```
+┌─────────────────────────────────┐
+│      Interface Streamlit        │
+│  (app.py)                       │
+└────────────┬────────────────────┘
+             │
+             ▼
+```
+
+### 2. Camada de Aplicação
+```
+┌─────────────────────────────────┐
+│   src/                          │
+│   ├── chatbot/                  │
+│   ├── calculators/              │
+│   ├── knowledge_base/           │
+│   ├── data_analysis/            │
+│   ├── database/                 │
+│   └── utils/                    │
+└─────────────────────────────────┘
+```
+
+### 3. Módulos
+
+#### Chatbot
+- **Função**: Processamento de linguagem natural
+- **Tecnologias**: OpenAI GPT / Google Gemini, LangChain
 - **Responsabilidades**:
-  - Renderização da interface web
-  - Captura de inputs do usuário
-  - Exibição de respostas e visualizações
-  - Gerenciamento de sessões
-
-### 2. Chatbot Engine
-- **Tecnologias**: LangChain, OpenAI/Gemini
-- **Funcionalidades**:
-  - Processamento de linguagem natural
+  - Compreensão de intenções
   - Geração de respostas contextualizadas
-  - Integração com base de conhecimento
-  - Chamada de ferramentas (calculadoras, APIs)
+  - Manutenção do histórico de conversação
 
-### 3. Calculadoras Financeiras
-- **Módulos**:
-  - Financiamento (SAC, Price, Amortização Constante)
-  - Investimentos (Renda Fixa, Tesouro, Ações)
-  - Aposentadoria
-  - Juros Compostos
-- **Saídas**: JSON, DataFrames, Visualizações
-
-### 4. Sistema de FAQs
-- **Busca Semântica**: Embeddings + Vector DB
-- **Ranking**: Similaridade de cosseno
-- **Personalização**: Baseada em perfil do usuário
-
-### 5. Context Manager
-- **Persistência**: SQLite
-- **Funcionalidades**:
-  - Histórico de conversas
-  - Preferências do usuário
-  - Estado da sessão
-  - Memória de longo prazo
-
-### 6. Data Analysis
-- **Bibliotecas**: Pandas, NumPy, Plotly
-- **Análises**:
-  - Padrões de gastos
+#### Calculators
+- **Função**: Cálculos financeiros
+- **Tecnologias**: NumPy, Pandas
+- **Responsabilidades**:
+  - Simulações de financiamento
+  - Cálculos de investimento
   - Projeções financeiras
-  - Recomendações personalizadas
+
+#### Knowledge Base
+- **Função**: Base de conhecimento e FAQs
+- **Tecnologias**: Embeddings, Vector Store
+- **Responsabilidades**:
+  - Armazenamento de conhecimento
+  - Busca semântica
+  - Recuperação de informações
+
+#### Data Analysis
+- **Função**: Análise e visualização de dados
+- **Tecnologias**: Pandas, Plotly
+- **Responsabilidades**:
+  - Processamento de dados
+  - Geração de gráficos
+  - Insights automatizados
+
+#### Database
+- **Função**: Persistência de dados
+- **Tecnologias**: SQLite
+- **Responsabilidades**:
+  - Gerenciamento de sessões
+  - Histórico de conversações
+  - Preferências do usuário
+
+#### Utils
+- **Função**: Utilitários compartilhados
+- **Responsabilidades**:
+  - Validações
+  - Formatação
+  - Helpers diversos
 
 ## Fluxo de Dados
 
-### 1. Interação do Usuário
-```
-Usuário → Input → Streamlit → Chatbot Engine
-```
-
-### 2. Processamento
-```
-Chatbot Engine → LLM → Context Manager → Knowledge Base
-                  ↓
-              Calculadoras/APIs
-```
-
-### 3. Resposta
-```
-Resposta Gerada → Formatação → UI → Usuário
-                      ↓
-                  Persistência
+```mermaid
+graph TD
+    A[Usuário] --> B[Interface Streamlit]
+    B --> C{Tipo de Interação}
+    C -->|Pergunta| D[Chatbot]
+    C -->|Cálculo| E[Calculators]
+    C -->|FAQ| F[Knowledge Base]
+    C -->|Análise| G[Data Analysis]
+    D --> H[Context Manager]
+    F --> H
+    H --> I[Database]
+    D --> J[IA Generativa]
+    F --> K[Vector Store]
+    E --> L[Resultado]
+    G --> L
+    D --> L
+    F --> L
+    L --> B
 ```
 
 ## Segurança
 
-### Camadas de Proteção
-1. **Autenticação**: JWT tokens
-2. **Criptografia**: Dados sensíveis em repouso
-3. **Sanitização**: Inputs do usuário
-4. **Rate Limiting**: Prevenção de abuso
-5. **LGPD Compliance**: Anonimização de dados
+### Camadas de Segurança
 
-### Boas Práticas
-- Variáveis de ambiente para secrets
-- Validação de inputs
-- Logs auditáveis
-- Backup regular de dados
+1. **Autenticação e Autorização**
+   - Validação de credenciais
+   - Controle de acesso baseado em perfis
+
+2. **Criptografia**
+   - Dados sensíveis em repouso
+   - Comunicação via HTTPS
+
+3. **Conformidade LGPD**
+   - Consentimento explícito
+   - Direito ao esquecimento
+   - Portabilidade de dados
 
 ## Escalabilidade
 
 ### Estratégias
-1. **Cache**: Redis para respostas frequentes
-2. **Queue**: Celery para tarefas assíncronas
-3. **Load Balancing**: Nginx
-4. **Containerização**: Docker
-5. **Orquestração**: Kubernetes (produção)
+
+- **Horizontal**: Múltiplas instâncias da aplicação
+- **Cache**: Redis para respostas frequentes
+- **CDN**: Distribuição de assets estáticos
+- **Load Balancing**: Distribuição de carga
 
 ## Monitoramento
 
-### Métricas
-- Tempo de resposta
-- Taxa de erro
-- Uso de recursos
-- Satisfação do usuário
-
-### Ferramentas
-- Prometheus
-- Grafana
-- Sentry (erros)
-- Application Insights
+- **Logs**: Estruturados em JSON
+- **Métricas**: Tempo de resposta, taxa de erro
+- **Alertas**: Notificações automáticas
 
 ## Tecnologias
 
-| Componente | Tecnologia | Versão |
-|------------|------------|--------|
-| Backend | Python | 3.9+ |
-| Framework Web | Streamlit | 1.28+ |
-| LLM | OpenAI/Gemini | - |
-| Orquestração LLM | LangChain | 0.1+ |
-| Banco de Dados | SQLite | 3 |
-| Análise de Dados | Pandas | 2.0+ |
-| Visualização | Plotly | 5.0+ |
-| Testes | Pytest | 7.0+ |
+| Componente | Tecnologia |
+|------------|------------|
+| Backend | Python 3.9+ |
+| Frontend | Streamlit |
+| IA | OpenAI GPT / Google Gemini |
+| Banco de Dados | SQLite |
+| Análise | Pandas, NumPy |
+| Visualização | Plotly |
+| Testes | Pytest |
 
-## Ambientes
+## Próximos Passos
 
-### Desenvolvimento
-- SQLite local
-- Mock de APIs externas
-- Debug mode ativado
-
-### Staging
-- Banco PostgreSQL
-- APIs reais (sandbox)
-- Logs detalhados
-
-### Produção
-- PostgreSQL gerenciado
-- APIs produção
-- Otimizações ativadas
-- Monitoramento completo
-
-## Roadmap Técnico
-
-- [ ] Migração para PostgreSQL
-- [ ] Implementação de cache Redis
-- [ ] API REST para integrações
-- [ ] App mobile (React Native)
-- [ ] Microserviços independentes
-- [ ] CI/CD com GitHub Actions
-- [ ] Deploy em cloud (AWS/Azure/GCP)
+- [ ] Integração com Open Banking
+- [ ] API RESTful
+- [ ] Aplicativo mobile
+- [ ] Dashboard administrativo

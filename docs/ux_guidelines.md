@@ -1,297 +1,288 @@
-# Guia de UX/UI - Assistente Financeiro
+# 🎨 Guia de UX/UI
 
 ## Princípios de Design
 
 ### 1. Simplicidade
 - Interface limpa e intuitiva
-- Foco na tarefa principal
-- Mínimo de distrações visuais
+- Fluxos diretos e sem fricção
+- Hierarquia visual clara
 
 ### 2. Acessibilidade
-- Contraste adequado (WCAG 2.1 AA)
-- Suporte a leitores de tela
+- Contraste adequado (WCAG 2.1)
+- Tamanhos de fonte legíveis
 - Navegação por teclado
-- Textos claros e objetivos
+- Compatibilidade com leitores de tela
 
-### 3. Consistência
-- Padrões visuais uniformes
-- Terminologia consistente
-- Comportamentos previsíveis
+### 3. Personalização
+- Experiência adaptada ao perfil do usuário
+- Preferências de visualização
+- Histórico contextualizado
 
-### 4. Feedback
-- Respostas imediatas às ações
-- Indicadores de carregamento
-- Confirmações de sucesso/erro
-- Mensagens claras
+### 4. Confiança
+- Transparência nas recomendações
+- Explicabilidade das decisões da IA
+- Segurança visível
 
 ## Paleta de Cores
 
 ### Cores Principais
-```
-Primária:   #C8102E (Vermelho Bradesco)
-Secundária: #003366 (Azul Escuro)
-Acento:     #FFD700 (Dourado)
-```
+```css
+/* Primária - Bradesco */
+--primary: #CC092F;
+--primary-light: #E63946;
+--primary-dark: #A50725;
 
-### Cores de Status
-```
-Sucesso:    #28A745
-Aviso:      #FFC107
-Erro:       #DC3545
-Info:       #17A2B8
-```
+/* Secundária */
+--secondary: #2C3E50;
+--secondary-light: #34495E;
+--secondary-dark: #1A252F;
 
-### Neutros
-```
-Texto:      #212529
-Texto Sec:  #6C757D
-Fundo:      #F8F9FA
-Bordas:     #DEE2E6
+/* Neutras */
+--gray-100: #F8F9FA;
+--gray-200: #E9ECEF;
+--gray-300: #DEE2E6;
+--gray-400: #CED4DA;
+--gray-500: #ADB5BD;
+--gray-600: #6C757D;
+--gray-700: #495057;
+--gray-800: #343A40;
+--gray-900: #212529;
+
+/* Feedback */
+--success: #28A745;
+--warning: #FFC107;
+--error: #DC3545;
+--info: #17A2B8;
 ```
 
 ## Tipografia
 
 ### Fontes
-- **Primária**: Inter, -apple-system, sans-serif
-- **Código**: 'Fira Code', monospace
+```css
+/* Principal */
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+/* Monoespaçada (código/números) */
+font-family: 'JetBrains Mono', 'Courier New', monospace;
+```
 
 ### Hierarquia
-```
-H1: 2.5rem / 40px - Bold
-H2: 2rem / 32px - Semibold
-H3: 1.5rem / 24px - Semibold
-Body: 1rem / 16px - Regular
-Small: 0.875rem / 14px - Regular
-```
+- **H1**: 32px / 2rem - Títulos principais
+- **H2**: 24px / 1.5rem - Seções
+- **H3**: 20px / 1.25rem - Subseções
+- **Body**: 16px / 1rem - Texto padrão
+- **Small**: 14px / 0.875rem - Legendas
 
-## Componentes UI
+## Componentes
 
-### 1. Chat Interface
+### Chat Interface
 
 #### Mensagens do Usuário
-- Alinhamento: Direita
-- Cor de fundo: #E3F2FD
-- Bordas arredondadas: 12px
-- Padding: 12px 16px
+```
+┌────────────────────────────────┐
+│ Quanto rende R$ 10.000 na    │ ◄─ Alinhado à direita
+│ poupança?                      │    Fundo: primary-light
+└────────────────────────────────┘    Texto: branco
+```
 
 #### Mensagens do Assistente
-- Alinhamento: Esquerda
-- Cor de fundo: #FFFFFF
-- Borda: 1px solid #DEE2E6
-- Bordas arredondadas: 12px
-- Padding: 12px 16px
-- Ícone: 🤖
-
-### 2. Botões
-
-#### Primário
-```css
-Background: #C8102E
-Color: #FFFFFF
-Padding: 10px 20px
-Border-radius: 6px
-Font-weight: 600
-
-Hover: #A00D25
-Active: #8A0B20
 ```
-
-#### Secundário
-```css
-Background: Transparent
-Color: #C8102E
-Border: 2px solid #C8102E
-Padding: 10px 20px
-Border-radius: 6px
-
-Hover: Background #FFF5F5
+┌────────────────────────────────┐
+│ 🤖 Com a taxa Selic atual...   │ ◄─ Alinhado à esquerda
+│                                │    Fundo: gray-100
+└────────────────────────────────┘    Texto: gray-900
 ```
-
-### 3. Inputs
-
-#### Campo de Texto
-```css
-Border: 1px solid #DEE2E6
-Border-radius: 6px
-Padding: 10px 12px
-Font-size: 1rem
-
-Focus: Border-color #C8102E, Box-shadow 0 0 0 3px rgba(200, 16, 46, 0.1)
-```
-
-### 4. Cards
-
-#### Calculadora/FAQ
-```css
-Background: #FFFFFF
-Border: 1px solid #DEE2E6
-Border-radius: 8px
-Padding: 20px
-Box-shadow: 0 2px 4px rgba(0,0,0,0.05)
-
-Hover: Box-shadow 0 4px 8px rgba(0,0,0,0.1)
-```
-
-## Layout
-
-### Estrutura da Página
-
-```
-┌────────────────────────────────────────┐
-│            Header/Logo                 │
-├────────────────────────────────────────┤
-│  Sidebar  │      Main Content          │
-│           │                            │
-│  Menu     │   Chat Area                │
-│  Items    │                            │
-│           │   ┌──────────────────┐     │
-│           │   │   Message        │     │
-│           │   │   Message        │     │
-│           │   │   Message        │     │
-│           │   └──────────────────┘     │
-│           │                            │
-│           │   [Input Field]  [Send]    │
-└───────────┴────────────────────────────┘
-```
-
-### Responsividade
-
-#### Desktop (>1024px)
-- Sidebar: 280px
-- Main: Flex
-- Layout: 2 colunas
-
-#### Tablet (768px - 1024px)
-- Sidebar: 240px
-- Main: Flex
-- Layout: 2 colunas colapsáveis
-
-#### Mobile (<768px)
-- Sidebar: Menu hamburger
-- Main: 100%
-- Layout: 1 coluna
-
-## Microinterações
-
-### 1. Botão de Envio
-```
-Idle → Hover (escala 1.05) → Click (pulso) → Loading (spinner)
-```
-
-### 2. Mensagens
-```
-Aparecem com fade-in + slide-up (300ms)
-```
-
-### 3. Calculadoras
-```
-Resultados aparecem com fade-in (200ms)
-```
-
-### 4. Tooltips
-```
-Hover delay: 500ms
-Fade-in: 200ms
-```
-
-## Estados de Loading
-
-### Chat
-- Mensagem temporária: "Assistente está pensando..."
-- Animação: 3 pontos pulsantes
-- Cor: #6C757D
 
 ### Calculadoras
-- Skeleton screen para resultados
-- Spinner centralizado
 
-### Dados
-- Progress bar para carregamentos longos
-- Mensagem descritiva
-
-## Mensagens de Erro
-
-### Estrutura
+#### Layout
 ```
 ┌─────────────────────────────────────┐
-│  ⚠️  Título do Erro                 │
-│                                     │
-│  Descrição clara do problema        │
-│                                     │
-│  [Ação Sugerida]                    │
+│ 📊 Simulador de Financiamento       │
+├─────────────────────────────────────┤
+│ Valor do Imóvel:     [R$ ______]   │
+│ Entrada:             [R$ ______]   │
+│ Prazo:               [___ meses]   │
+│ Taxa de Juros:       [____ % a.a.] │
+├─────────────────────────────────────┤
+│           [Calcular]                │
 └─────────────────────────────────────┘
 ```
 
-### Exemplos
-- **Erro de Conexão**: "Não foi possível conectar. Verifique sua internet."
-- **Erro de API**: "Serviço temporariamente indisponível. Tente novamente em instantes."
-- **Validação**: "Por favor, preencha todos os campos obrigatórios."
+#### Resultado
+```
+┌─────────────────────────────────────┐
+│ Resultado da Simulação              │
+├─────────────────────────────────────┤
+│ Valor Financiado:    R$ 180.000,00 │
+│ Parcela Mensal:      R$ 1.245,67   │
+│ Total a Pagar:       R$ 224.220,60 │
+│ Juros Total:         R$ 44.220,60  │
+└─────────────────────────────────────┘
+```
 
-## Acessibilidade (WCAG 2.1)
+### Gráficos
 
-### Checklist
-- [ ] Contraste mínimo 4.5:1 para texto
-- [ ] Todos os elementos interativos acessíveis por teclado
-- [ ] Labels descritivos para inputs
-- [ ] Alt text para imagens
-- [ ] Aria-labels para ícones
-- [ ] Foco visível em elementos interativos
-- [ ] Suporte a zoom até 200%
-- [ ] Sem dependência apenas de cor
+#### Estilo
+- **Cores**: Paleta consistente
+- **Interatividade**: Tooltip, zoom, pan
+- **Responsividade**: Adapta ao tamanho da tela
+- **Acessibilidade**: Legendas claras
 
-## Tom de Voz
+## Estados de Interação
 
-### Características
-- **Amigável**: Como um consultor pessoal
-- **Profissional**: Confiável e competente
-- **Claro**: Sem jargões desnecessários
-- **Prestativo**: Sempre disposto a ajudar
+### Botões
 
-### Exemplos
+#### Estados
+- **Default**: Cor primária, sombra sutil
+- **Hover**: Cor mais escura, sombra elevada
+- **Active**: Cor mais escura, sem sombra
+- **Disabled**: Cinza, sem interação
+- **Loading**: Spinner animado
 
-❌ **Evitar**: "Erro 500: Internal Server Error"
-✅ **Preferir**: "Ops! Algo deu errado. Nossa equipe já foi notificada."
+#### Exemplo CSS
+```css
+.button {
+  background: var(--primary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
 
-❌ **Evitar**: "Input inválido"
-✅ **Preferir**: "Por favor, insira um valor entre R$ 1.000 e R$ 1.000.000"
+.button:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(204, 9, 47, 0.3);
+}
+```
+
+### Inputs
+
+#### Estados
+- **Default**: Borda cinza
+- **Focus**: Borda primária, sombra
+- **Error**: Borda vermelha, mensagem de erro
+- **Success**: Borda verde, ícone de check
+- **Disabled**: Fundo cinza claro
+
+## Feedback ao Usuário
+
+### Mensagens de Sucesso
+```
+✅ Simulação realizada com sucesso!
+```
+
+### Mensagens de Erro
+```
+❌ Não foi possível processar sua solicitação. Tente novamente.
+```
+
+### Mensagens de Aviso
+```
+⚠️ Os valores são apenas simulações e não constituem oferta.
+```
+
+### Mensagens Informativas
+```
+ℹ️ Esta operação pode levar alguns segundos...
+```
+
+## Loading States
+
+### Skeleton Screen
+Para listas e cards:
+```
+┌────────────────────┐
+│ ▓▓▓▓▓▓▓▓          │
+│ ▓▓▓▓▓▓▓▓▓▓▓▓      │
+│ ▓▓▓▓▓▓            │
+└────────────────────┘
+```
+
+### Spinner
+Para operações rápidas:
+```
+  ⟳  Processando...
+```
+
+## Responsividade
+
+### Breakpoints
+```css
+/* Mobile */
+@media (max-width: 768px) { ... }
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) { ... }
+
+/* Desktop */
+@media (min-width: 1025px) { ... }
+```
+
+### Adaptações Mobile
+- Menu hamburger
+- Cards empilhados
+- Inputs full-width
+- Botões expansivos
 
 ## Animações
 
-### Timing
-- Rápida: 150-200ms (hover, tooltips)
-- Média: 300-400ms (transições, modals)
-- Lenta: 500-600ms (page transitions)
+### Princípios
+- **Duração**: 200-300ms para interações
+- **Easing**: ease-in-out para naturalidade
+- **Propósito**: Guiar atenção, não distrair
 
-### Easing
-- **Entrada**: ease-out
-- **Saída**: ease-in
-- **Bidirecionais**: ease-in-out
+### Exemplos
+```css
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-## Performance UX
+/* Slide up */
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+```
 
-### Tempos Alvo
-- Resposta de chat: < 2s
-- Cálculo financeiro: < 500ms
-- Carregamento de página: < 1s
-- Busca em FAQs: < 300ms
+## Boas Práticas
 
-### Estratégias
-- Skeleton screens
-- Optimistic UI updates
-- Lazy loading de componentes
-- Debounce em buscas (300ms)
+### ✅ Fazer
+- Usar ícones consistentes
+- Fornecer feedback imediato
+- Validar inputs em tempo real
+- Mostrar progresso em operações longas
+- Usar linguagem clara e objetiva
+
+### ❌ Evitar
+- Animações excessivas
+- Cores que não atendem contraste
+- Jargões técnicos sem explicação
+- Formulários muito longos
+- Pop-ups intrusivos
+
+## Checklist de Acessibilidade
+
+- [ ] Contraste mínimo 4.5:1 para texto
+- [ ] Navegação por teclado funcional
+- [ ] Labels em todos os inputs
+- [ ] Alt text em imagens
+- [ ] ARIA labels em componentes complexos
+- [ ] Foco visível em elementos interativos
+- [ ] Sem dependência exclusiva de cor para informação
+- [ ] Testado com leitores de tela
 
 ## Testes de Usabilidade
 
 ### Métricas
-1. **Task Success Rate**: > 90%
-2. **Time on Task**: < 2 min (para tarefas comuns)
-3. **Error Rate**: < 5%
-4. **Satisfaction (SUS)**: > 80
+- **Task Success Rate**: Taxa de conclusão de tarefas
+- **Time on Task**: Tempo para completar tarefas
+- **Error Rate**: Frequência de erros
+- **Satisfaction**: NPS, CSAT
 
-### Cenários de Teste
-1. Simular um financiamento
-2. Buscar informação sobre produto
-3. Fazer uma pergunta complexa
-4. Navegar entre funcionalidades
-5. Usar em dispositivo móvel
+### Ferramentas
+- Google Lighthouse (Performance, Accessibility)
+- WAVE (Web Accessibility Evaluation Tool)
+- Hotjar (Heatmaps, Session Recordings)

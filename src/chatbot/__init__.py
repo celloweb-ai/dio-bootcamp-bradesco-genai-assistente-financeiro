@@ -1,9 +1,7 @@
-"""Módulo principal do chatbot.
-
-Este módulo contém a lógica principal do assistente financeiro,
-incluindo processamento de linguagem natural e gerenciamento de diálogos.
+"""
+Módulo Chatbot - Interação com IA Generativa
 """
 
-from .chatbot import FinancialChatbot
+from .chatbot import ChatBot
 
-__all__ = ['FinancialChatbot']
+__all__ = ['ChatBot']

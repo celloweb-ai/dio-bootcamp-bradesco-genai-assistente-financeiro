@@ -1,0 +1,21 @@
+data,descricao,valor,categoria
+2024-01-05,Supermercado Extra,235.67,Alimentação
+2024-01-08,Uber,45.30,Transporte
+2024-01-10,Netflix,49.90,Lazer
+2024-01-12,Farmácia,89.50,Saúde
+2024-01-15,Aluguel,1500.00,Moradia
+2024-01-18,Restaurante,125.00,Alimentação
+2024-01-20,Posto de Gasolina,250.00,Transporte
+2024-01-22,Academia,99.00,Saúde
+2024-01-25,Cinema,60.00,Lazer
+2024-01-28,Padaria,35.80,Alimentação
+2024-02-02,Supermercado,198.45,Alimentação
+2024-02-05,Uber,38.20,Transporte
+2024-02-08,Spotify,21.90,Lazer
+2024-02-10,Condomínio,450.00,Moradia
+2024-02-15,Aluguel,1500.00,Moradia
+2024-02-18,Médico,250.00,Saúde
+2024-02-20,Restaurante,95.50,Alimentação
+2024-02-22,Posto de Gasolina,280.00,Transporte
+2024-02-25,Livraria,85.00,Lazer
+2024-02-28,Feira,67.30,Alimentação

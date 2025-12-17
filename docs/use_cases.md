@@ -1,486 +1,404 @@
-# Casos de Uso
+# 📚 Casos de Uso
 
 ## Visão Geral
 
-Documentação dos principais casos de uso do Assistente Financeiro Inteligente.
+Documentação dos principais casos de uso do Assistente Financeiro.
 
 ---
 
-## 1. Consulta de Produtos Bancários
+## 1. Consulta de Saldo e Extrato
 
 ### Descrição
-Usuário busca informações sobre produtos e serviços bancários.
+Usuário consulta saldo da conta e movimentações recentes.
 
 ### Atores
-- Usuário (Cliente ou Prospect)
-- Assistente IA
-- Base de Conhecimento
-
-### Pré-condições
-- Aplicação em execução
-- Base de FAQs carregada
-
-### Fluxo Principal
-
-1. Usuário acessa a aplicação
-2. Usuário digita pergunta sobre produto (ex: "O que é CDB?")
-3. Sistema identifica intenção usando NLP
-4. Sistema busca na base de FAQs
-5. Sistema gera resposta personalizada com IA
-6. Sistema exibe resposta com links relacionados
-7. Sistema sugere perguntas relacionadas
-
-### Fluxo Alternativo 1: FAQ não encontrada
-
-4a. Sistema não encontra FAQ específica
-4b. Sistema gera resposta usando conhecimento geral do LLM
-4c. Sistema registra gap para futura adição
-
-### Pós-condições
-- Conversa registrada no histórico
-- Contexto atualizado para próximas interações
-
-### Exemplo
-
-```
-Usuário: "Quanto rende a poupança?"
-
-Assistente: "A poupança atualmente rende 70% da taxa Selic 
-quando esta estiver acima de 8,5% ao ano, mais TR (Taxa 
-Referencial). Com a Selic em 13,75% (dez/2024), o 
-rendimento fica em aproximadamente 9,62% ao ano ou 
-0,77% ao mês.
-
-Deseja simular quanto você pode ganhar investindo na 
-poupança?
-
-📊 Calcular Rendimento | 💡 Alternativas à Poupança"
-```
-
----
-
-## 2. Simulação de Financiamento
-
-### Descrição
-Usuário deseja simular financiamento (imóvel, veículo, etc.).
-
-### Atores
-- Usuário
-- Calculadora de Financiamento
-- Módulo de Visualização
-
-### Pré-condições
-- Usuário informou intenção de simular
-
-### Fluxo Principal
-
-1. Usuário solicita simulação de financiamento
-2. Sistema apresenta formulário interativo
-3. Usuário informa:
-   - Valor do bem
-   - Valor de entrada
-   - Prazo desejado
-   - Sistema de amortização (SAC/PRICE)
-4. Sistema valida dados
-5. Sistema calcula parcelas
-6. Sistema gera visualização comparativa
-7. Sistema exibe resultados detalhados
-8. Sistema oferece salvar simulação
-
-### Fluxo Alternativo 1: Dados inválidos
-
-4a. Sistema detecta valor inválido
-4b. Sistema exibe mensagem de erro específica
-4c. Sistema mantém outros campos preenchidos
-4d. Retorna ao passo 3
-
-### Fluxo Alternativo 2: Comparação de sistemas
-
-6a. Usuário solicita comparar SAC vs PRICE
-6b. Sistema calcula ambos os sistemas
-6c. Sistema exibe tabela comparativa lado a lado
-6d. Sistema destaca diferenças principais
-
-### Pós-condições
-- Simulação salva (opcional)
-- Usuário tem todas informações necessárias
-
-### Exemplo de Interação
-
-```
-Usuário: "Quero financiar um carro de R$ 50.000"
-
-Assistente: "Vou te ajudar a simular! Preciso de algumas 
-informações:"
-
-[Formulário exibido]
-Valor do veículo: R$ 50.000
-Entrada: R$ 10.000
-Prazo: 48 meses
-Sistema: SAC ▼
-
-[Calcular]
-
-Resultados:
-┌─────────────────────────────────┐
-│ Sistema SAC - 48 meses         │
-│ Taxa: 1,5% a.m. (19,56% a.a.) │
-├─────────────────────────────────┤
-│ Primeira parcela: R$ 1.433,33  │
-│ Última parcela: R$ 842,08      │
-│ Total de juros: R$ 14.800,00   │
-│ Total a pagar: R$ 54.800,00    │
-└─────────────────────────────────┘
-
-[Ver tabela completa] [Comparar com PRICE] [Salvar]
-```
-
----
-
-## 3. Análise de Gastos Pessoais
-
-### Descrição
-Usuário carrega dados bancários para análise e insights.
-
-### Atores
-- Usuário
-- Módulo de Análise de Dados
-- IA Generativa (para insights)
-
-### Pré-condições
-- Usuário tem arquivo CSV/Excel com transações
-- Arquivo segue formato esperado
-
-### Fluxo Principal
-
-1. Usuário acessa seção "Análise de Dados"
-2. Usuário faz upload do arquivo
-3. Sistema valida formato e dados
-4. Sistema processa transações
-5. Sistema categoriza automaticamente
-6. Sistema gera visualizações:
-   - Gastos por categoria
-   - Evolução temporal
-   - Comparativo mensal
-7. IA gera insights personalizados
-8. Sistema exibe recomendações
-9. Usuário pode fazer perguntas sobre dados
-
-### Fluxo Alternativo 1: Arquivo inválido
-
-3a. Sistema detecta formato incorreto
-3b. Sistema exibe exemplo de formato correto
-3c. Sistema permite baixar template
-3d. Retorna ao passo 2
-
-### Fluxo Alternativo 2: Categorização manual
-
-5a. Sistema não reconhece categoria
-5b. Sistema solicita confirmação do usuário
-5c. Sistema aprende com a escolha
-5d. Continua no passo 6
-
-### Pós-condições
-- Dados analisados e salvos
-- Insights gerados e disponíveis
-- Modelo melhorado com feedback
-
-### Exemplo de Insights
-
-```
-📊 Análise - Novembro 2024
-
-💰 Resumo Financeiro
-Receitas: R$ 8.500,00
-Despesas: R$ 6.750,00
-Saldo: +R$ 1.750,00 (20,6%)
-
-📈 Principais Insights:
-
-1. 🍔 Alimentação em alta
-   Você gastou 35% a mais com alimentação este mês 
-   (R$ 1.850 vs R$ 1.370 média).
-   
-   Sugestão: Considere meal prep para reduzir gastos 
-   com delivery.
-
-2. 💡 Economia em energia
-   Parabéns! Sua conta de luz reduziu 15%.
-   Economia de R$ 45,00.
-
-3. 🎯 Meta de investimento
-   Você investiu R$ 1.000 este mês.
-   Faltam R$ 500 para sua meta de 15% da renda.
-
-[Ver detalhes] [Exportar relatório] [Definir metas]
-```
-
----
-
-## 4. Planejamento de Aposentadoria
-
-### Descrição
-Usuário quer planejar aposentadoria e descobrir quanto precisa poupar.
-
-### Atores
-- Usuário
-- Calculadora de Investimentos
-- IA para recomendações
-
-### Pré-condições
-- Nenhuma
-
-### Fluxo Principal
-
-1. Usuário expressa interesse em aposentadoria
-2. Sistema inicia questionário guiado:
-   - Idade atual
-   - Idade desejada para aposentadoria
-   - Renda mensal desejada
-   - Quanto já tem poupado
-   - Quanto pode poupar mensalmente
-3. Sistema calcula valor necessário
-4. Sistema simula diferentes cenários:
-   - Conservador (Renda fixa)
-   - Moderado (Misto)
-   - Arrojado (Renda variável)
-5. Sistema mostra evolução do patrimônio
-6. Sistema gera plano de ação personalizado
-7. Usuário pode ajustar parâmetros
-
-### Fluxo Alternativo 1: Meta inatingível
-
-3a. Sistema detecta que meta é irreal
-3b. Sistema sugere ajustes:
-   - Aumentar idade de aposentadoria
-   - Reduzir renda desejada
-   - Aumentar aportes mensais
-3c. Usuário ajusta parâmetros
-3d. Retorna ao passo 3
-
-### Pós-condições
-- Plano de aposentadoria gerado
-- Usuário tem clareza sobre próximos passos
-
-### Exemplo
-
-```
-Usuário: "Quero me aposentar aos 60 anos"
-
-Assistente: "Ótimo! Vou te ajudar a planejar. 
-Qual sua idade hoje?"
-
-Usuário: "35 anos"
-
-Assistente: "Perfeito! Você tem 25 anos para construir 
-seu patrimônio. Qual renda mensal deseja na aposentadoria?"
-
-Usuário: "R$ 10.000 por mês"
-
-Assistente: "Entendi. Para garantir R$ 10.000/mês 
-até os 85 anos, você precisará de aproximadamente 
-R$ 3.000.000.
-
-Considerando investimentos com rentabilidade média 
-de 8% a.a., você precisaria investir:
-
-💰 Sem patrimônio atual: R$ 3.200/mês
-💰 Com R$ 100.000 hoje: R$ 2.400/mês
-
-Você já tem algum valor investido?"
-```
-
----
-
-## 5. Educação Financeira Interativa
-
-### Descrição
-Usuário quer aprender sobre finanças de forma interativa.
-
-### Atores
-- Usuário
-- IA Educadora
-- Base de Conhecimento
-
-### Pré-condições
-- Nenhuma
-
-### Fluxo Principal
-
-1. Usuário acessa seção "Aprender"
-2. Sistema apresenta trilhas de aprendizado:
-   - Básico (Controle financeiro)
-   - Intermediário (Investimentos)
-   - Avançado (Estratégias complexas)
-3. Usuário escolhe trilha ou tópico específico
-4. Sistema apresenta conteúdo de forma conversacional
-5. Sistema intercala com perguntas práticas
-6. Sistema usa exemplos personalizados
-7. Sistema avalia compreensão
-8. Sistema recomenda próximos tópicos
-
-### Fluxo Alternativo 1: Dúvida durante aprendizado
-
-4a. Usuário faz pergunta
-4b. Sistema responde contextualizadamente
-4c. Sistema oferece aprofundar tópico
-4d. Retorna ao conteúdo ou aprofunda
-
-### Pós-condições
-- Progresso salvo
-- Certificado virtual (ao completar trilha)
-
-### Exemplo
-
-```
-📚 Trilha: Investimentos para Iniciantes
-Módulo 1: Entendendo Renda Fixa
-Progresso: ████░░░░░░ 40%
-
-Assistente: "Vamos falar sobre CDB!
-
-CDB é como emprestar dinheiro ao banco. Em troca, 
-o banco te paga juros. É garantido pelo FGC até 
-R$ 250.000.
-
-Por exemplo: você investe R$ 10.000 em um CDB que 
-paga 120% do CDI por 2 anos.
-
-Sabendo que o CDI hoje está em ~13,65% ao ano, 
-quanto você acha que terá no final?
-
-a) R$ 10.500
-b) R$ 12.900
-c) R$ 13.100
-d) R$ 15.000"
-
-Usuário: "b"
-
-Assistente: "🎉 Correto! Muito bem!
-
-Com 120% do CDI, você teria aproximadamente 
-R$ 12.928.
-
-Agora uma pergunta: se você precisar do dinheiro 
-antes dos 2 anos, o que acontece?"
-```
-
----
-
-## 6. Atendimento Multicanal
-
-### Descrição
-Usuário inicia conversa em um canal e continua em outro.
-
-### Atores
-- Usuário
-- Sistema de Sessões
-- Múltiplos canais (Web, Mobile)
+- Usuário (Cliente do banco)
+- Assistente Financeiro
 
 ### Pré-condições
 - Usuário autenticado
-- Sistema de sessões configurado
+- Conta bancária ativa
 
 ### Fluxo Principal
 
-1. Usuário inicia conversa no navegador
-2. Sistema cria sessão com ID único
-3. Usuário faz perguntas e recebe respostas
-4. Usuário fecha navegador
-5. Mais tarde, abre app mobile
-6. Sistema recupera sessão ativa
-7. Sistema exibe histórico
-8. Usuário continua de onde parou
+1. Usuário pergunta: "Qual é meu saldo?"
+2. Assistente identifica intenção de consulta de saldo
+3. Sistema recupera saldo da conta
+4. Assistente responde: "Seu saldo atual é R$ 5.432,18"
+5. Usuário solicita: "Mostre meu extrato dos últimos 7 dias"
+6. Sistema recupera movimentações
+7. Assistente apresenta lista formatada de transações
 
-### Fluxo Alternativo 1: Nova sessão
+### Fluxos Alternativos
 
-6a. Usuário prefere começar nova conversa
-6b. Sistema arquiva sessão anterior
-6c. Sistema cria nova sessão
-6d. Histórico anterior acessível em "Conversas Antigas"
+**A1: Conta com saldo negativo**
+- Sistema detecta saldo negativo
+- Assistente alerta sobre uso de limite
+- Oferece orientações sobre regularização
+
+**A2: Múltiplas contas**
+- Assistente pergunta qual conta consultar
+- Usuário especifica (conta corrente/poupança)
+- Continua fluxo normal
 
 ### Pós-condições
-- Contexto preservado entre sessões
-- Experiência contínua
+- Informação exibida ao usuário
+- Conversação registrada no histórico
 
 ---
 
-## 7. Alertas Inteligentes
+## 2. Simulação de Financiamento Imobiliário
 
 ### Descrição
-Sistema proativamente alerta usuário sobre oportunidades ou riscos.
+Usuário simula financiamento de imóvel.
 
 ### Atores
-- Sistema de Monitoramento
-- Usuário
-- Módulo de Notificações
+- Usuário potencial comprador
+- Assistente Financeiro
 
 ### Pré-condições
-- Usuário configurou preferências de alerta
-- Sistema tem dados do usuário
+- Nenhuma
 
 ### Fluxo Principal
 
-1. Sistema monitora continuamente:
-   - Taxas de juros
-   - Gastos anormais
-   - Oportunidades de investimento
-   - Vencimentos
-2. Sistema detecta evento relevante
-3. Sistema avalia relevância para usuário
-4. Sistema gera alerta personalizado
-5. Sistema envia notificação
-6. Usuário visualiza e pode agir
+1. Usuário: "Quero financiar um imóvel de R$ 300.000"
+2. Assistente coleta informações:
+   - "Qual o valor de entrada que você possui?"
+   - "Em quanto tempo pretende pagar?"
+3. Usuário fornece: "R$ 50.000 de entrada, em 20 anos"
+4. Sistema calcula simulação (SAC e Price)
+5. Assistente apresenta:
+   - Valor financiado
+   - Parcela inicial e final (SAC)
+   - Parcela fixa (Price)
+   - Total de juros
+   - Gráfico de evolução das parcelas
+6. Usuário analisa opções
+7. Assistente oferece agendar contato com gerente
 
-### Exemplos de Alertas
+### Fluxos Alternativos
 
-```
-⚠️ Gasto Incomum Detectado
-Você gastou R$ 850 em "Alimentação" esta semana.
-Isso é 120% acima da sua média.
+**A1: Entrada insuficiente**
+- Sistema detecta entrada < 20%
+- Assistente informa requisito mínimo
+- Sugere ajustar valores
 
-[Ver detalhes] [Está tudo OK]
+**A2: Prazo muito longo**
+- Assistente alerta sobre custo total elevado
+- Sugere simular prazos menores
 
----
-
-💡 Oportunidade de Investimento
-A taxa do Tesouro Selic aumentou para 14,25%.
-Com esse valor, seus R$ 10.000 renderiam R$ 118/mês.
-
-[Simular] [Investir agora] [Lembrar depois]
-
----
-
-📅 Lembrete
-Fatura do cartão vence em 3 dias: R$ 2.450,00
-Saldo disponível: R$ 3.100,00 ✓
-
-[Pagar agora] [Já paguei]
-```
+### Pós-condições
+- Simulação salva no histórico
+- Usuário informado sobre próximos passos
 
 ---
 
-## Métricas de Sucesso
+## 3. Recomendação de Investimentos
 
-Para cada caso de uso, medimos:
+### Descrição
+Usuário busca recomendações de investimento.
 
-- **Taxa de Conclusão**: % que completam o fluxo
-- **Tempo Médio**: Duração da interação
-- **Satisfação**: Rating do usuário (1-5)
-- **Taxa de Erro**: % de falhas
-- **Retenção**: Usuários que retornam
+### Atores
+- Usuário investidor
+- Assistente Financeiro
+
+### Pré-condições
+- Usuário autenticado
+- Perfil de investidor preenchido
+
+### Fluxo Principal
+
+1. Usuário: "Onde posso investir R$ 10.000?"
+2. Assistente verifica perfil de investidor
+3. Sistema analisa:
+   - Perfil de risco (conservador/moderado/arrojado)
+   - Objetivo (reserva/aposentadoria/objetivo específico)
+   - Prazo
+4. Assistente apresenta recomendações:
+   - Poupança: X% do valor
+   - Tesouro Direto: Y% do valor
+   - Fundos: Z% do valor
+5. Explica cada opção:
+   - Rentabilidade esperada
+   - Risco
+   - Liquidez
+   - Tributação
+6. Usuário escolhe opção
+7. Assistente orienta sobre como investir
+
+### Fluxos Alternativos
+
+**A1: Perfil não preenchido**
+- Assistente oferece questionário de perfil
+- Usuário responde questões
+- Sistema define perfil
+- Continua fluxo normal
+
+**A2: Valor muito baixo**
+- Assistente informa sobre valor mínimo
+- Sugere iniciar com poupança ou tesouro
+
+### Pós-condições
+- Recomendações registradas
+- Usuário orientado
 
 ---
 
-## Roadmap de Casos de Uso
+## 4. Consulta de FAQ sobre Produtos
 
-### Em Desenvolvimento
-- [ ] Integração com Open Banking
-- [ ] Recomendação de cartão de crédito
-- [ ] Comparador de investimentos
+### Descrição
+Usuário tira dúvidas sobre produtos bancários.
 
-### Planejado
-- [ ] Negociação de dívidas
-- [ ] Análise de crédito imobiliário
-- [ ] Planejamento de viagens
-- [ ] Gestão de benefícios corporativos
+### Atores
+- Usuário
+- Assistente Financeiro
+
+### Pré-condições
+- Nenhuma
+
+### Fluxo Principal
+
+1. Usuário: "Como funciona o Pix?"
+2. Sistema busca semanticamente na base de conhecimento
+3. Encontra FAQs relevantes
+4. Assistente responde:
+   - Explicação clara sobre Pix
+   - Como usar
+   - Limites
+   - Segurança
+5. Oferece perguntas relacionadas:
+   - "Como aumentar limite do Pix?"
+   - "Pix tem custo?"
+   - "Como fazer Pix agendado?"
+
+### Fluxos Alternativos
+
+**A1: Pergunta não encontrada**
+- Assistente admite não saber
+- Oferece transferir para atendente humano
+- Registra pergunta para futura inclusão
+
+**A2: Múltiplas interpretações**
+- Assistente pede esclarecimento
+- Usuário especifica
+- Continua fluxo normal
+
+### Pós-condições
+- Dúvida esclarecida
+- Feedback coletado
+
+---
+
+## 5. Análise de Gastos Mensais
+
+### Descrição
+Usuário analisa padrões de gastos.
+
+### Atores
+- Usuário
+- Assistente Financeiro
+
+### Pré-condições
+- Usuário autenticado
+- Histórico de transações disponível
+
+### Fluxo Principal
+
+1. Usuário: "Quanto gastei este mês?"
+2. Sistema analisa transações do mês
+3. Assistente apresenta:
+   - Total gasto
+   - Gastos por categoria (gráfico pizza)
+   - Comparação com mês anterior
+   - Tendência (aumentando/diminuindo)
+4. Usuário: "Onde mais gastei?"
+5. Sistema identifica top 3 categorias
+6. Assistente mostra detalhamento:
+   - Alimentação: R$ 1.200
+   - Transporte: R$ 800
+   - Lazer: R$ 600
+7. Oferece insights:
+   - "Seus gastos com alimentação aumentaram 15%"
+   - "Sugiro revisar assinaturas de streaming"
+
+### Fluxos Alternativos
+
+**A1: Primeiro mês**
+- Não há histórico para comparação
+- Assistente apresenta apenas dados atuais
+- Incentiva continuar usando para análises futuras
+
+**A2: Gasto anômalo detectado**
+- Sistema identifica transação atipicamente alta
+- Assistente questiona se está correto
+- Oferece categorizar corretamente
+
+### Pós-condições
+- Análise exibida
+- Insights registrados
+- Metas financeiras sugeridas
+
+---
+
+## 6. Planejamento de Aposentadoria
+
+### Descrição
+Usuário planeja aposentadoria com assistência.
+
+### Atores
+- Usuário
+- Assistente Financeiro
+
+### Pré-condições
+- Nenhuma
+
+### Fluxo Principal
+
+1. Usuário: "Quero planejar minha aposentadoria"
+2. Assistente coleta informações:
+   - Idade atual
+   - Idade planejada para aposentadoria
+   - Renda mensal desejada na aposentadoria
+   - Valor atual disponível para investir
+   - Capacidade de aporte mensal
+3. Sistema calcula:
+   - Montante necessário
+   - Plano de aportes
+   - Rentabilidade necessária
+4. Assistente apresenta:
+   - Plano de investimento
+   - Gráfico de evolução patrimonial
+   - Simulações com diferentes cenários
+5. Oferece produtos adequados:
+   - Previdência privada
+   - Tesouro IPCA+
+   - Fundos de longo prazo
+
+### Fluxos Alternativos
+
+**A1: Meta inviável**
+- Sistema detecta impossibilidade
+- Assistente explica a situação
+- Sugere ajustes:
+  - Aumentar aportes
+  - Estender prazo
+  - Reduzir expectativa de renda
+
+### Pós-condições
+- Plano criado
+- Metas estabelecidas
+- Acompanhamento agendado
+
+---
+
+## 7. Transferência e Pagamentos
+
+### Descrição
+Usuário realiza transferências via assistente.
+
+### Atores
+- Usuário
+- Assistente Financeiro
+- Sistema Bancário
+
+### Pré-condições
+- Usuário autenticado
+- Saldo disponível
+
+### Fluxo Principal
+
+1. Usuário: "Quero fazer um Pix de R$ 100 para João"
+2. Assistente:
+   - Verifica contatos salvos
+   - Encontra "João Silva"
+3. Confirma: "Transferir R$ 100,00 para João Silva (chave: 123.456.789-00)?"
+4. Usuário confirma
+5. Sistema solicita autenticação (senha/biometria)
+6. Transferência processada
+7. Assistente confirma: "Transferência realizada com sucesso!"
+8. Exibe comprovante
+
+### Fluxos Alternativos
+
+**A1: Saldo insuficiente**
+- Sistema detecta saldo insuficiente
+- Assistente informa
+- Oferece ver limite disponível
+
+**A2: Contato não encontrado**
+- Assistente pede chave Pix
+- Usuário fornece
+- Valida chave
+- Continua fluxo normal
+
+**A3: Falha na autenticação**
+- Tentativa inválida
+- Oferece tentar novamente
+- Após 3 tentativas, bloqueia temporariamente
+
+### Pós-condições
+- Transferência concluída
+- Comprovante disponível
+- Saldo atualizado
+
+---
+
+## 8. Atendimento Escalonado
+
+### Descrição
+Transferência para atendente humano quando necessário.
+
+### Atores
+- Usuário
+- Assistente Financeiro
+- Atendente Humano
+
+### Pré-condições
+- Usuário em conversa com assistente
+
+### Fluxo Principal
+
+1. Assistente não consegue resolver demanda
+2. Oferece: "Gostaria de falar com um atendente?"
+3. Usuário aceita
+4. Sistema:
+   - Salva contexto da conversação
+   - Verifica disponibilidade de atendentes
+5. Assistente: "Transferindo para atendente. Tempo estimado: 2 minutos"
+6. Conecta com atendente humano
+7. Atendente recebe histórico da conversa
+8. Continua atendimento
+
+### Fluxos Alternativos
+
+**A1: Fora do horário**
+- Informa horário de atendimento
+- Oferece deixar mensagem
+- Oferece agendar retorno
+
+**A2: Fila cheia**
+- Informa posição na fila
+- Oferece callback
+- Usuário escolhe aguardar ou receber ligação
+
+### Pós-condições
+- Atendimento registrado
+- Feedback coletado
+- IA aprende com a interação
+
+---
+
+## Matriz de Priorização
+
+| Caso de Uso | Complexidade | Valor | Prioridade |
+|-------------|--------------|-------|------------|
+| FAQ | Baixa | Alto | Alta |
+| Simulação Financiamento | Média | Alto | Alta |
+| Análise Gastos | Média | Alto | Alta |
+| Consulta Saldo | Baixa | Médio | Média |
+| Recomendação Investimentos | Alta | Alto | Média |
+| Planejamento Aposentadoria | Alta | Médio | Média |
+| Transferências | Alta | Alto | Baixa* |
+| Atendimento Escalonado | Média | Alto | Alta |
+
+*Baixa prioridade devido a questões de segurança e regulatórias

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "pergunta": "Como funciona o Pix?",
+    "resposta": "O Pix é um meio de pagamento instantâneo criado pelo Banco Central do Brasil. Permite realizar transferências e pagamentos 24 horas por dia, 7 dias por semana, incluindo fins de semana e feriados. A transação é concluída em até 10 segundos. Você pode usar como chave: CPF, CNPJ, email, telefone ou uma chave aleatória.",
+    "categoria": "Pagamentos",
+    "tags": ["pix", "transferência", "pagamento", "instantâneo"]
+  },
+  {
+    "id": 2,
+    "pergunta": "Qual o rendimento da poupança?",
+    "resposta": "A poupança tem rendimento variável: quando a Selic está acima de 8,5% ao ano, rende 0,5% ao mês + TR (Taxa Referencial). Quando a Selic está em 8,5% ou menos, rende 70% da Selic + TR. O rendimento é creditado mensalmente no aniversário do depósito.",
+    "categoria": "Investimentos",
+    "tags": ["poupança", "rendimento", "taxa", "selic"]
+  },
+  {
+    "id": 3,
+    "pergunta": "Como aumentar limite do cartão?",
+    "resposta": "Para solicitar aumento de limite: 1) Acesse o app do banco, 2) Vá em 'Meu Cartão', 3) Selecione 'Aumentar limite', 4) Informe o valor desejado, 5) Aguarde análise automática (até 24h). Dicas para aprovação: mantenha bom histórico de pagamentos, evite atrasos, use o cartão regularmente.",
+    "categoria": "Cartões",
+    "tags": ["cartão", "limite", "crédito", "aumento"]
+  },
+  {
+    "id": 4,
+    "pergunta": "O que é Tesouro Direto?",
+    "resposta": "Tesouro Direto é um programa do governo federal para venda de títulos públicos a pessoas físicas pela internet. É considerado o investimento mais seguro do Brasil. Aplicação mínima: R$ 30. Tipos: Tesouro Selic (pós-fixado), Tesouro IPCA+ (inflac ao + juros fixos), Tesouro Prefixado (taxa fixa).",
+    "categoria": "Investimentos",
+    "tags": ["tesouro direto", "investimento", "títulos públicos", "renda fixa"]
+  },
+  {
+    "id": 5,
+    "pergunta": "Como cancelar cartão de crédito?",
+    "resposta": "Para cancelar seu cartão: 1) Quite todas as faturas pendentes, 2) Cancele débitos automáticos, 3) Entre em contato pelo app, telefone ou agência, 4) Solicite formalmente o cancelamento, 5) Peça número de protocolo, 6) Destrua o cartão físico. O cancelamento ocorre em até 5 dias úteis.",
+    "categoria": "Cartões",
+    "tags": ["cartão", "cancelamento", "encerramento"]
+  },
+  {
+    "id": 6,
+    "pergunta": "Como funciona o Open Banking?",
+    "resposta": "Open Banking permite compartilhar suas informações financeiras entre instituições autorizadas pelo Banco Central. Você controla quais dados compartilhar e por quanto tempo. Benefícios: melhores ofertas de produtos, comparação facilitada, mais opções de crédito. É totalmente seguro e regulamentado.",
+    "categoria": "Serviços Bancários",
+    "tags": ["open banking", "compartilhamento", "dados", "segurança"]
+  }
+]
