@@ -1,427 +1,395 @@
-# API Reference
+# 📡 Referência da API
 
 ## Visão Geral
 
-Documentação completa das APIs e módulos do Assistente Financeiro.
+Documentação completa das funções e módulos do Assistente Financeiro.
 
 ## Módulos
 
-### 1. Chatbot Module
+### Chatbot
 
-#### `ChatbotEngine`
+#### `ChatBot`
+
+Classe principal para interação com IA generativa.
 
 ```python
-from src.chatbot import ChatbotEngine
+from src.chatbot import ChatBot
 
-engine = ChatbotEngine(api_key="your_key", model="gpt-4")
-response = engine.chat(message="Como investir em CDB?", context={})
+chatbot = ChatBot(api_key="sua_chave_api")
 ```
 
-**Métodos:**
+##### Métodos
 
-##### `chat(message: str, context: dict) -> dict`
+**`chat(message: str, context: dict = None) -> str`**
 
-Processa uma mensagem do usuário e retorna resposta.
+Processa uma mensagem e retorna resposta.
 
 **Parâmetros:**
 - `message` (str): Mensagem do usuário
-- `context` (dict): Contexto da conversa
+- `context` (dict, opcional): Contexto da conversação
 
 **Retorna:**
+- `str`: Resposta gerada pela IA
+
+**Exemplo:**
 ```python
-{
-    "response": str,      # Resposta gerada
-    "intent": str,        # Intenção identificada
-    "confidence": float,  # Confiança (0-1)
-    "suggestions": list   # Sugestões de follow-up
-}
-```
-
-##### `reset_context() -> None`
-
-Reseta o contexto da conversa.
-
----
-
-### 2. Calculators Module
-
-#### `FinancingCalculator`
-
-```python
-from src.calculators import FinancingCalculator
-
-calc = FinancingCalculator()
-result = calc.calculate_sac(
-    principal=100000,
-    annual_rate=10.5,
-    months=24
+resposta = chatbot.chat(
+    message="Quanto rende R$ 10.000 na poupança?",
+    context={"user_id": "123", "session_id": "abc"}
 )
+print(resposta)
 ```
 
-**Métodos:**
+**`reset_conversation() -> None`**
 
-##### `calculate_sac(principal: float, annual_rate: float, months: int) -> dict`
+Reseta o histórico de conversação.
 
-Calcula financiamento pelo Sistema SAC.
-
-**Parâmetros:**
-- `principal` (float): Valor financiado
-- `annual_rate` (float): Taxa anual (%)
-- `months` (int): Prazo em meses
-
-**Retorna:**
+**Exemplo:**
 ```python
-{
-    "installments": [          # Lista de parcelas
-        {
-            "number": int,
-            "payment": float,
-            "principal": float,
-            "interest": float,
-            "balance": float
-        }
-    ],
-    "total_paid": float,       # Total pago
-    "total_interest": float    # Juros totais
-}
-```
-
-##### `calculate_price(principal: float, annual_rate: float, months: int) -> dict`
-
-Calcula financiamento pelo Sistema PRICE.
-
-**Parâmetros:** Mesmos do SAC
-
-**Retorna:** Mesma estrutura do SAC
-
-##### `calculate_investment(initial: float, monthly: float, rate: float, months: int) -> dict`
-
-Calcula rendimento de investimento.
-
-**Parâmetros:**
-- `initial` (float): Valor inicial
-- `monthly` (float): Aporte mensal
-- `rate` (float): Taxa mensal (%)
-- `months` (int): Período em meses
-
-**Retorna:**
-```python
-{
-    "invested": float,         # Total investido
-    "final_value": float,      # Valor final
-    "earnings": float,         # Rendimento
-    "monthly_data": [          # Evolução mensal
-        {
-            "month": int,
-            "balance": float,
-            "interest": float
-        }
-    ]
-}
+chatbot.reset_conversation()
 ```
 
 ---
 
-### 3. FAQs Module
+### Calculators
+
+#### `FinancialCalculators`
+
+Calculadoras financeiras diversas.
+
+```python
+from src.calculators import FinancialCalculators
+
+calc = FinancialCalculators()
+```
+
+##### Métodos
+
+**`calcular_financiamento_sac(valor: float, entrada: float, prazo: int, taxa: float) -> dict`**
+
+Calcula financiamento pelo sistema SAC.
+
+**Parâmetros:**
+- `valor` (float): Valor total do bem
+- `entrada` (float): Valor da entrada
+- `prazo` (int): Prazo em meses
+- `taxa` (float): Taxa de juros anual (%)
+
+**Retorna:**
+- `dict`: Dados da simulação
+  - `valor_financiado` (float)
+  - `parcelas` (list): Lista de parcelas
+  - `total_juros` (float)
+  - `total_pago` (float)
+
+**Exemplo:**
+```python
+resultado = calc.calcular_financiamento_sac(
+    valor=200000,
+    entrada=20000,
+    prazo=180,
+    taxa=9.5
+)
+
+print(f"Primeira parcela: R$ {resultado['parcelas'][0]:.2f}")
+print(f"Total de juros: R$ {resultado['total_juros']:.2f}")
+```
+
+**`calcular_investimento(valor_inicial: float, aporte_mensal: float, taxa: float, prazo: int) -> dict`**
+
+Calcula retorno de investimento com aportes.
+
+**Parâmetros:**
+- `valor_inicial` (float): Valor inicial investido
+- `aporte_mensal` (float): Valor de aporte mensal
+- `taxa` (float): Taxa de rendimento anual (%)
+- `prazo` (int): Prazo em meses
+
+**Retorna:**
+- `dict`: Projeção do investimento
+  - `montante_final` (float)
+  - `total_investido` (float)
+  - `total_rendimento` (float)
+  - `evolucao_mensal` (list)
+
+**Exemplo:**
+```python
+investimento = calc.calcular_investimento(
+    valor_inicial=10000,
+    aporte_mensal=500,
+    taxa=12.5,
+    prazo=60
+)
+
+print(f"Montante final: R$ {investimento['montante_final']:.2f}")
+```
+
+---
+
+### Knowledge Base (FAQs)
 
 #### `FAQManager`
+
+Gerenciador de base de conhecimento.
 
 ```python
 from src.faqs import FAQManager
 
 faq = FAQManager()
-results = faq.search("como abrir conta")
 ```
 
-**Métodos:**
+##### Métodos
 
-##### `search(query: str, limit: int = 5) -> list`
+**`buscar(pergunta: str, top_k: int = 3) -> list`**
 
-Busca FAQs relevantes.
+Busca semântica em FAQs.
 
 **Parâmetros:**
-- `query` (str): Pergunta do usuário
-- `limit` (int): Máximo de resultados
+- `pergunta` (str): Pergunta do usuário
+- `top_k` (int): Número de resultados
 
 **Retorna:**
+- `list`: Lista de dicionários com FAQs relevantes
+
+**Exemplo:**
 ```python
-[
-    {
-        "id": int,
-        "question": str,
-        "answer": str,
-        "category": str,
-        "similarity": float  # Score de similaridade
-    }
-]
+resultados = faq.buscar("Como funciona o Pix?", top_k=3)
+
+for item in resultados:
+    print(f"Pergunta: {item['pergunta']}")
+    print(f"Resposta: {item['resposta']}")
+    print(f"Score: {item['score']}")
+    print("---")
 ```
 
-##### `add_faq(question: str, answer: str, category: str) -> int`
+**`adicionar_faq(pergunta: str, resposta: str, categoria: str) -> None`**
 
-Adiciona nova FAQ.
+Adiciona nova FAQ à base.
 
-**Retorna:** ID da FAQ criada
+**Parâmetros:**
+- `pergunta` (str): Pergunta
+- `resposta` (str): Resposta
+- `categoria` (str): Categoria da FAQ
 
-##### `get_categories() -> list`
-
-Retorna todas as categorias disponíveis.
+**Exemplo:**
+```python
+faq.adicionar_faq(
+    pergunta="O que é Open Banking?",
+    resposta="Open Banking é um sistema que permite...",
+    categoria="Serviços Bancários"
+)
+```
 
 ---
 
-### 4. Data Analysis Module
+### Data Analysis
 
-#### `FinancialAnalyzer`
+#### `DataAnalyzer`
+
+Análise e visualização de dados financeiros.
 
 ```python
-from src.data_analysis import FinancialAnalyzer
+from src.data_analysis import DataAnalyzer
 import pandas as pd
 
-df = pd.read_csv('transactions.csv')
-analyzer = FinancialAnalyzer(df)
-insights = analyzer.generate_insights()
+analyzer = DataAnalyzer()
 ```
 
-**Métodos:**
+##### Métodos
 
-##### `generate_insights() -> dict`
+**`analisar_gastos(df: pd.DataFrame) -> dict`**
 
-Gera insights dos dados financeiros.
-
-**Retorna:**
-```python
-{
-    "summary": {
-        "total_income": float,
-        "total_expenses": float,
-        "balance": float,
-        "avg_monthly_expense": float
-    },
-    "by_category": dict,       # Gastos por categoria
-    "trends": dict,            # Tendências temporais
-    "recommendations": list    # Recomendações
-}
-```
-
-##### `plot_expenses(by: str = 'category') -> plotly.graph_objs.Figure`
-
-Gera gráfico de despesas.
+Analisa padrões de gastos.
 
 **Parâmetros:**
-- `by` (str): Agrupamento ('category', 'month', 'type')
-
-**Retorna:** Objeto Figure do Plotly
-
-##### `predict_next_month() -> dict`
-
-Prevê gastos do próximo mês.
+- `df` (pd.DataFrame): DataFrame com transações
+  - Colunas: `data`, `descricao`, `valor`, `categoria`
 
 **Retorna:**
+- `dict`: Análise dos gastos
+  - `total_gasto` (float)
+  - `gastos_por_categoria` (dict)
+  - `media_mensal` (float)
+  - `tendencia` (str)
+
+**Exemplo:**
 ```python
-{
-    "predicted_expenses": float,
-    "confidence_interval": (float, float),
-    "by_category": dict
-}
+df = pd.DataFrame({
+    'data': ['2024-01-01', '2024-01-15'],
+    'descricao': ['Supermercado', 'Restaurante'],
+    'valor': [350.00, 120.00],
+    'categoria': ['Alimentação', 'Alimentação']
+})
+
+analise = analyzer.analisar_gastos(df)
+print(analise)
+```
+
+**`gerar_grafico_evolucao(df: pd.DataFrame, periodo: str = 'mensal') -> plotly.graph_objs.Figure`**
+
+Gera gráfico de evolução.
+
+**Parâmetros:**
+- `df` (pd.DataFrame): DataFrame com dados
+- `periodo` (str): 'diario', 'mensal', 'anual'
+
+**Retorna:**
+- `plotly.graph_objs.Figure`: Gráfico interativo
+
+**Exemplo:**
+```python
+import streamlit as st
+
+fig = analyzer.gerar_grafico_evolucao(df, periodo='mensal')
+st.plotly_chart(fig)
 ```
 
 ---
 
-### 5. Context Manager
+### Context Manager
 
 #### `ContextManager`
+
+Gerencia contexto de conversações.
 
 ```python
 from src.context_manager import ContextManager
 
-ctx = ContextManager()
-ctx.add_message("user", "Olá")
-ctx.add_message("assistant", "Como posso ajudar?")
-history = ctx.get_history()
+context = ContextManager()
 ```
 
-**Métodos:**
+##### Métodos
 
-##### `add_message(role: str, content: str) -> None`
+**`adicionar_mensagem(user_id: str, message: str, role: str) -> None`**
 
 Adiciona mensagem ao contexto.
 
 **Parâmetros:**
+- `user_id` (str): ID do usuário
+- `message` (str): Conteúdo da mensagem
 - `role` (str): 'user' ou 'assistant'
-- `content` (str): Conteúdo da mensagem
 
-##### `get_history(limit: int = 10) -> list`
-
-Retorna histórico de mensagens.
-
-**Parâmetros:**
-- `limit` (int): Número máximo de mensagens
-
-**Retorna:**
+**Exemplo:**
 ```python
-[
-    {
-        "role": str,
-        "content": str,
-        "timestamp": str
-    }
-]
+context.adicionar_mensagem(
+    user_id="user123",
+    message="Quanto tenho na poupança?",
+    role="user"
+)
 ```
 
-##### `save_session() -> str`
+**`obter_historico(user_id: str, limite: int = 10) -> list`**
 
-Salva sessão no banco de dados.
+Obtém histórico de mensagens.
 
-**Retorna:** ID da sessão
+**Parâmetros:**
+- `user_id` (str): ID do usuário
+- `limite` (int): Número de mensagens
 
-##### `load_session(session_id: str) -> bool`
+**Retorna:**
+- `list`: Lista de mensagens
 
-Carrega sessão salva.
-
-**Retorna:** True se sucesso
+**Exemplo:**
+```python
+historico = context.obter_historico("user123", limite=5)
+for msg in historico:
+    print(f"{msg['role']}: {msg['message']}")
+```
 
 ---
 
-### 6. Database Module
+### Database
 
 #### `DatabaseManager`
+
+Gerenciamento de banco de dados.
 
 ```python
 from src.database import DatabaseManager
 
 db = DatabaseManager()
-db.execute("INSERT INTO ...", params)
-results = db.query("SELECT * FROM ...")
 ```
 
-**Métodos:**
+##### Métodos
 
-##### `execute(query: str, params: tuple = None) -> int`
+**`salvar_conversa(user_id: str, messages: list) -> None`**
 
-Executa query de modificação.
+Salva conversação no banco.
 
-**Retorna:** Número de linhas afetadas
+**`carregar_conversa(user_id: str) -> list`**
 
-##### `query(sql: str, params: tuple = None) -> list`
+Carrega conversação do banco.
 
-Executa query de consulta.
+**`salvar_preferencias(user_id: str, preferencias: dict) -> None`**
 
-**Retorna:** Lista de resultados
-
-##### `create_tables() -> None`
-
-Cria estrutura do banco de dados.
+Salva preferências do usuário.
 
 ---
 
-## Utilities
+### Utils
 
-### `src.utils.validators`
+#### Validators
 
 ```python
-from src.utils.validators import validate_cpf, validate_email
+from src.utils.validators import validar_cpf, validar_email
 
-if validate_cpf("123.456.789-00"):
+# Validar CPF
+if validar_cpf("123.456.789-00"):
     print("CPF válido")
+
+# Validar email
+if validar_email("usuario@example.com"):
+    print("Email válido")
 ```
 
-**Funções:**
-
-- `validate_cpf(cpf: str) -> bool`
-- `validate_email(email: str) -> bool`
-- `validate_phone(phone: str) -> bool`
-- `sanitize_input(text: str) -> str`
-
-### `src.utils.formatters`
+#### Formatters
 
 ```python
-from src.utils.formatters import format_currency, format_percentage
+from src.utils.formatters import formatar_moeda, formatar_percentual
 
-print(format_currency(1250.50))  # "R$ 1.250,50"
-print(format_percentage(0.125))   # "12,5%"
+# Formatar moeda
+print(formatar_moeda(1234.56))  # "R$ 1.234,56"
+
+# Formatar percentual
+print(formatar_percentual(0.125))  # "12,5%"
 ```
-
-**Funções:**
-
-- `format_currency(value: float) -> str`
-- `format_percentage(value: float) -> str`
-- `format_date(date: datetime) -> str`
 
 ---
 
-## Códigos de Erro
+## Tratamento de Erros
 
-| Código | Descrição |
-|--------|----------|
-| 1001 | Erro de validação de entrada |
-| 1002 | Parâmetro obrigatório ausente |
-| 2001 | Erro de conexão com LLM |
-| 2002 | Rate limit excedido |
-| 3001 | Erro de banco de dados |
-| 3002 | Sessão não encontrada |
-| 4001 | Erro de cálculo |
-| 5001 | FAQ não encontrada |
-
----
-
-## Exemplos de Uso Completos
-
-### Exemplo 1: Conversa Completa
+Todas as funções podem lançar exceções. Sempre use try/except:
 
 ```python
-from src.chatbot import ChatbotEngine
-from src.context_manager import ContextManager
-
-engine = ChatbotEngine()
-context = ContextManager()
-
-# Primeira mensagem
-response = engine.chat("Quero investir R$ 10.000", {})
-context.add_message("user", "Quero investir R$ 10.000")
-context.add_message("assistant", response["response"])
-
-# Segunda mensagem com contexto
-ctx_dict = context.get_context()
-response = engine.chat("Qual rende mais?", ctx_dict)
+try:
+    resultado = calc.calcular_financiamento_sac(
+        valor=200000,
+        entrada=20000,
+        prazo=180,
+        taxa=9.5
+    )
+except ValueError as e:
+    print(f"Erro de validação: {e}")
+except Exception as e:
+    print(f"Erro inesperado: {e}")
 ```
 
-### Exemplo 2: Análise Financeira Completa
+## Variáveis de Ambiente
 
-```python
-import pandas as pd
-from src.data_analysis import FinancialAnalyzer
-
-df = pd.read_csv('data/samples/sample_transactions.csv')
-analyzer = FinancialAnalyzer(df)
-
-# Gerar insights
-insights = analyzer.generate_insights()
-
-# Criar visualização
-fig = analyzer.plot_expenses(by='category')
-fig.show()
-
-# Previsão
-prediction = analyzer.predict_next_month()
-print(f"Previsão: R$ {prediction['predicted_expenses']:.2f}")
+```bash
+# .env
+OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=...
+DATABASE_URL=sqlite:///assistente.db
+LOG_LEVEL=INFO
 ```
 
-### Exemplo 3: Calculadora de Investimento
+## Logging
 
 ```python
-from src.calculators import FinancingCalculator
-import pandas as pd
+import logging
 
-calc = FinancingCalculator()
-
-result = calc.calculate_investment(
-    initial=10000,
-    monthly=500,
-    rate=0.8,  # 0.8% ao mês
-    months=24
-)
-
-df = pd.DataFrame(result['monthly_data'])
-print(f"Total investido: R$ {result['invested']:.2f}")
-print(f"Valor final: R$ {result['final_value']:.2f}")
-print(f"Rendimento: R$ {result['earnings']:.2f}")
+logger = logging.getLogger(__name__)
+logger.info("Operação realizada com sucesso")
+logger.error("Erro ao processar solicitação")
 ```
