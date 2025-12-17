@@ -1,111 +1,177 @@
-"""Validadores de dados."""
+"""
+Validadores de dados
+Funções para validação de CPF, email, telefone, etc.
+"""
 
 import re
 from typing import Optional
 
 
-def validate_email(email: str) -> bool:
-    """Valida endereço de email.
-    
-    Args:
-        email: Email a validar
-        
-    Returns:
-        True se válido, False caso contrário
-        
-    Example:
-        >>> validate_email('user@example.com')
-        True
+def validar_cpf(cpf: str) -> bool:
     """
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return bool(re.match(pattern, email))
+    Valida CPF.
 
-
-def validate_cpf(cpf: str) -> bool:
-    """Valida CPF.
-    
     Args:
-        cpf: CPF a validar
-        
+        cpf: CPF a ser validado (com ou sem pontuação)
+
     Returns:
         True se válido, False caso contrário
-        
-    Example:
-        >>> validate_cpf('123.456.789-01')
-        True ou False dependendo da validação
     """
     # Remove caracteres não numéricos
-    cpf = ''.join(filter(str.isdigit, cpf))
-    
+    cpf = re.sub(r'\D', '', cpf)
+
     # Verifica se tem 11 dígitos
     if len(cpf) != 11:
         return False
-    
+
     # Verifica se todos os dígitos são iguais
     if cpf == cpf[0] * 11:
         return False
-    
-    # Calcula primeiro dígito verificador
-    sum_digits = sum(int(cpf[i]) * (10 - i) for i in range(9))
-    digit1 = (sum_digits * 10 % 11) % 10
-    
-    if digit1 != int(cpf[9]):
-        return False
-    
-    # Calcula segundo dígito verificador
-    sum_digits = sum(int(cpf[i]) * (11 - i) for i in range(10))
-    digit2 = (sum_digits * 10 % 11) % 10
-    
-    return digit2 == int(cpf[10])
 
+    # Valida primeiro dígito verificador
+    soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+    digito1 = (soma * 10 % 11) % 10
+    if int(cpf[9]) != digito1:
+        return False
 
-def validate_phone(phone: str) -> bool:
-    """Valida telefone brasileiro.
-    
-    Args:
-        phone: Telefone a validar
-        
-    Returns:
-        True se válido, False caso contrário
-        
-    Example:
-        >>> validate_phone('(11) 98765-4321')
-        True
-    """
-    # Remove caracteres não numéricos
-    phone = ''.join(filter(str.isdigit, phone))
-    
-    # Verifica se tem 10 ou 11 dígitos (celular com 9)
-    if len(phone) not in [10, 11]:
+    # Valida segundo dígito verificador
+    soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+    digito2 = (soma * 10 % 11) % 10
+    if int(cpf[10]) != digito2:
         return False
-    
-    # Verifica DDD válido (11 a 99)
-    ddd = int(phone[:2])
-    if ddd < 11 or ddd > 99:
-        return False
-    
+
     return True
 
 
-def validate_amount(amount: str) -> Optional[float]:
-    """Valida e converte valor monetário.
-    
-    Args:
-        amount: Valor a validar
-        
-    Returns:
-        Float com o valor ou None se inválido
-        
-    Example:
-        >>> validate_amount('R$ 1.234,56')
-        1234.56
+def validar_cnpj(cnpj: str) -> bool:
     """
+    Valida CNPJ.
+
+    Args:
+        cnpj: CNPJ a ser validado (com ou sem pontuação)
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    # Remove caracteres não numéricos
+    cnpj = re.sub(r'\D', '', cnpj)
+
+    # Verifica se tem 14 dígitos
+    if len(cnpj) != 14:
+        return False
+
+    # Verifica se todos os dígitos são iguais
+    if cnpj == cnpj[0] * 14:
+        return False
+
+    # Valida primeiro dígito verificador
+    multiplicadores1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    soma = sum(int(cnpj[i]) * multiplicadores1[i] for i in range(12))
+    digito1 = 11 - (soma % 11)
+    digito1 = 0 if digito1 >= 10 else digito1
+    if int(cnpj[12]) != digito1:
+        return False
+
+    # Valida segundo dígito verificador
+    multiplicadores2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    soma = sum(int(cnpj[i]) * multiplicadores2[i] for i in range(13))
+    digito2 = 11 - (soma % 11)
+    digito2 = 0 if digito2 >= 10 else digito2
+    if int(cnpj[13]) != digito2:
+        return False
+
+    return True
+
+
+def validar_email(email: str) -> bool:
+    """
+    Valida email.
+
+    Args:
+        email: Email a ser validado
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    padrao = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return bool(re.match(padrao, email))
+
+
+def validar_telefone(telefone: str) -> bool:
+    """
+    Valida telefone brasileiro (celular ou fixo).
+
+    Args:
+        telefone: Telefone a ser validado (com ou sem pontuação)
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    # Remove caracteres não numéricos
+    telefone = re.sub(r'\D', '', telefone)
+
+    # Verifica se tem 10 ou 11 dígitos (com DDD)
+    if len(telefone) not in [10, 11]:
+        return False
+
+    # Verifica DDD válido (11 a 99)
+    ddd = int(telefone[:2])
+    if ddd < 11 or ddd > 99:
+        return False
+
+    # Se tem 11 dígitos, o terceiro deve ser 9 (celular)
+    if len(telefone) == 11 and telefone[2] != '9':
+        return False
+
+    return True
+
+
+def validar_cep(cep: str) -> bool:
+    """
+    Valida CEP.
+
+    Args:
+        cep: CEP a ser validado (com ou sem pontuação)
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    # Remove caracteres não numéricos
+    cep = re.sub(r'\D', '', cep)
+
+    # Verifica se tem 8 dígitos
+    return len(cep) == 8
+
+
+def validar_valor_monetario(valor: str) -> bool:
+    """
+    Valida formato de valor monetário.
+
+    Args:
+        valor: Valor a ser validado (ex: "1.234,56" ou "1234.56")
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    # Aceita formatos: 1234.56, 1.234,56, 1234,56
+    padrao = r'^\d{1,3}(\.\d{3})*(,\d{2})?$|^\d+(\.\d{2})?$'
+    return bool(re.match(padrao, valor))
+
+
+def validar_data(data: str, formato: str = '%d/%m/%Y') -> bool:
+    """
+    Valida formato de data.
+
+    Args:
+        data: Data a ser validada
+        formato: Formato esperado (padrão: dd/mm/yyyy)
+
+    Returns:
+        True se válido, False caso contrário
+    """
+    from datetime import datetime
     try:
-        # Remove símbolos e espaços
-        amount = amount.replace('R$', '').replace(' ', '')
-        # Substitui separadores brasileiros
-        amount = amount.replace('.', '').replace(',', '.')
-        value = float(amount)
-        return value if value >= 0 else None
+        datetime.strptime(data, formato)
+        return True
     except ValueError:
-        return None
+        return False
