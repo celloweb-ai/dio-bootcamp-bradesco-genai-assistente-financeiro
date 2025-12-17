@@ -1,0 +1,39 @@
+{
+  "faqs": [
+    {
+      "id": 1,
+      "categoria": "conta_corrente",
+      "pergunta": "Como abrir uma conta corrente?",
+      "resposta": "Para abrir uma conta corrente, você precisa: 1) Ser maior de 18 anos, 2) Ter CPF regular, 3) Apresentar documento com foto, 4) Comprovante de residência. O processo pode ser feito pelo app em poucos minutos.",
+      "tags": ["abertura", "conta", "documentos"]
+    },
+    {
+      "id": 2,
+      "categoria": "investimentos",
+      "pergunta": "Qual a diferença entre CDB e Poupança?",
+      "resposta": "O CDB geralmente oferece rentabilidade superior à poupança (100-120% do CDI vs 70% da Selic). Porém, o CDB pode ter prazo de carência e investimento mínimo, enquanto a poupança tem liquidez imediata e não exige valor mínimo.",
+      "tags": ["cdb", "poupanca", "rentabilidade"]
+    },
+    {
+      "id": 3,
+      "categoria": "cartao",
+      "pergunta": "Como solicitar aumento de limite?",
+      "resposta": "Você pode solicitar aumento de limite pelo app na seção 'Meu Cartão'. A análise leva até 48h e considera seu relacionamento com o banco, histórico de pagamentos e renda.",
+      "tags": ["cartao", "limite", "credito"]
+    },
+    {
+      "id": 4,
+      "categoria": "seguranca",
+      "pergunta": "O que fazer em caso de fraude?",
+      "resposta": "Em caso de transação não reconhecida: 1) Bloqueie imediatamente o cartão pelo app, 2) Registre uma contestação na seção 'Ajuda', 3) Acompanhe o protocolo. O prazo de análise é de até 7 dias úteis.",
+      "tags": ["fraude", "seguranca", "contestacao"]
+    },
+    {
+      "id": 5,
+      "categoria": "investimentos",
+      "pergunta": "Como funciona o Tesouro Direto?",
+      "resposta": "O Tesouro Direto permite investir em títulos públicos federais com valor mínimo de R$ 30. Você empresta dinheiro ao governo e recebe juros. O Tesouro Selic é ideal para iniciantes por ter liquidez diária e baixo risco.",
+      "tags": ["tesouro", "investimento", "renda_fixa"]
+    }
+  ]
+}

@@ -1,389 +1,304 @@
-# Guia de UX/UI - Assistente Financeiro Inteligente
+# Guia de UX/UI - Assistente Financeiro
 
 ## Princípios de Design
 
-### 1. Clareza e Simplicidade
-- **Linguagem clara**: Evitar jargões financeiros complexos sem explicação
-- **Interface limpa**: Minimizar elementos visuais desnecessários
-- **Hierarquia visual**: Destacar informações mais importantes
+### 1. Clareza
+- **Linguagem simples**: Evitar jargões financeiros complexos
+- **Hierarquia visual**: Informações mais importantes em destaque
+- **Feedback imediato**: Resposta rápida a todas as ações
 
-### 2. Confiança e Segurança
-- **Transparência**: Explicar como os dados são usados
-- **Indicadores de segurança**: Mostrar status de conexão segura
-- **Avisos claros**: Alertas sobre operações críticas
+### 2. Confiança
+- **Transparência**: Explicar como as informações são usadas
+- **Segurança visível**: Indicadores de proteção de dados
+- **Consistência**: Padrões mantidos em toda aplicação
 
 ### 3. Acessibilidade
-- **Contraste adequado**: WCAG 2.1 AA ou superior
-- **Tamanho de fonte**: Mínimo 14px para texto corrido
+- **Contraste adequado**: WCAG 2.1 AA compliance
+- **Responsividade**: Adaptação a diferentes telas
 - **Navegação por teclado**: Suporte completo
-
-### 4. Responsividade
-- **Mobile-first**: Design otimizado para dispositivos móveis
-- **Breakpoints**: 320px, 768px, 1024px, 1440px
-- **Touch targets**: Mínimo 44x44px
 
 ## Paleta de Cores
 
-### Cores Primárias
-```css
---primary: #CC092F;        /* Vermelho Bradesco */
---primary-dark: #A00725;
---primary-light: #E63950;
+### Cores Principais
+```
+Primária (Azul Bradesco):  #CC092F (vermelho institucional)
+Secundária (Azul Escuro):  #003B7A
+Acento (Verde):            #00A86B (positivo/sucesso)
+Alerta (Amarelo):          #FFA500
+Erro (Vermelho):           #DC143C
 ```
 
-### Cores Secundárias
-```css
---secondary: #0066CC;      /* Azul confiança */
---success: #28A745;        /* Verde sucesso */
---warning: #FFC107;        /* Amarelo alerta */
---danger: #DC3545;         /* Vermelho erro */
---info: #17A2B8;          /* Azul informação */
+### Cores de Suporte
 ```
-
-### Cores Neutras
-```css
---gray-50: #F8F9FA;
---gray-100: #E9ECEF;
---gray-200: #DEE2E6;
---gray-300: #CED4DA;
---gray-400: #ADB5BD;
---gray-500: #6C757D;
---gray-600: #495057;
---gray-700: #343A40;
---gray-800: #212529;
---gray-900: #0D0E10;
+Fundo Claro:      #FFFFFF
+Fundo Secundário: #F5F5F5
+Texto Principal:  #333333
+Texto Secundário: #666666
+Bordas:           #E0E0E0
 ```
 
 ## Tipografia
 
 ### Fontes
-```css
---font-primary: 'Inter', 'Segoe UI', sans-serif;
---font-monospace: 'Roboto Mono', 'Courier New', monospace;
+```
+Principal: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI'
+Mono: 'Fira Code', 'Courier New', monospace (para valores)
 ```
 
-### Escala Tipográfica
-```css
---text-xs: 0.75rem;    /* 12px */
---text-sm: 0.875rem;   /* 14px */
---text-base: 1rem;     /* 16px */
---text-lg: 1.125rem;   /* 18px */
---text-xl: 1.25rem;    /* 20px */
---text-2xl: 1.5rem;    /* 24px */
---text-3xl: 1.875rem;  /* 30px */
---text-4xl: 2.25rem;   /* 36px */
+### Hierarquia
+```
+H1: 32px, Bold (Títulos principais)
+H2: 24px, Semibold (Seções)
+H3: 20px, Semibold (Subseções)
+Body: 16px, Regular (Texto corrente)
+Small: 14px, Regular (Legendas)
 ```
 
 ## Componentes
 
-### Chat Interface
+### Chatbot Interface
 
-#### Mensagem do Usuário
+**Layout**:
 ```
-┌─────────────────────────────────────┐
-│ Qual é a melhor opção de            │
-│ investimento para meu perfil?   👤  │
-└─────────────────────────────────────┘
-```
-- Alinhamento: Direita
-- Background: `--gray-100`
-- Borda: Arredondada (12px)
-- Padding: 12px 16px
-
-#### Mensagem do Assistente
-```
-┌─────────────────────────────────────┐
-│ 🤖  Baseado no seu perfil           │
-│     moderado, sugiro...             │
-└─────────────────────────────────────┘
-```
-- Alinhamento: Esquerda
-- Background: Branco
-- Borda: Arredondada (12px) + sombra leve
-- Padding: 12px 16px
-
-### Botões
-
-#### Primário
-```css
-background: var(--primary);
-color: white;
-border-radius: 8px;
-padding: 12px 24px;
-font-weight: 600;
-transition: all 0.2s ease;
-
-&:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(204, 9, 47, 0.3);
-}
+┌─────────────────────────────────┐
+│  🤖 Assistente Financeiro       │
+├─────────────────────────────────┤
+│                                 │
+│  💬 Mensagens do chat           │
+│  (scroll vertical)              │
+│                                 │
+├─────────────────────────────────┤
+│  [Digite sua mensagem...]  [>]  │
+└─────────────────────────────────┘
 ```
 
-#### Secundário
-```css
-background: transparent;
-color: var(--primary);
-border: 2px solid var(--primary);
-border-radius: 8px;
-padding: 12px 24px;
+**Bolhas de Mensagem**:
+- **Usuário**: Alinhada à direita, fundo azul claro
+- **Assistente**: Alinhada à esquerda, fundo cinza claro
+- **Sistema**: Centralizada, itálico, cor neutra
 
-&:hover {
-  background: var(--primary);
-  color: white;
-}
+### Calculadoras
+
+**Estrutura**:
+1. **Inputs**: Campos claros com labels e placeholders
+2. **Botão Calcular**: Destaque, cor primária
+3. **Resultados**: Cards separados, fácil leitura
+4. **Gráficos**: Visualização complementar
+
+**Exemplo - Financiamento**:
+```
+┌────────────────────────────────┐
+│ Valor do Imóvel:               │
+│ [R$ ___________]               │
+│                                │
+│ Entrada:                       │
+│ [R$ ___________]               │
+│                                │
+│ Prazo (meses):                 │
+│ [___]                          │
+│                                │
+│     [📊 Calcular]              │
+└────────────────────────────────┘
 ```
 
-### Cards
+### Cards de Produtos
 
-#### Card de Produto Financeiro
 ```
-┌────────────────────────────────────┐
-│ 💰 CDB Bradesco                    │
-│                                    │
-│ Rentabilidade: 110% CDI            │
-│ Liquidez: D+0                      │
-│ Investimento mínimo: R$ 500        │
-│                                    │
-│ [Saiba mais] [Simular]             │
-└────────────────────────────────────┘
-```
-- Background: Branco
-- Borda: 1px `--gray-200`
-- Border-radius: 12px
-- Box-shadow: `0 2px 8px rgba(0,0,0,0.05)`
-- Padding: 20px
-
-### Formulários
-
-#### Input Field
-```css
-border: 1px solid var(--gray-300);
-border-radius: 8px;
-padding: 12px 16px;
-font-size: var(--text-base);
-
-&:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(204, 9, 47, 0.1);
-  outline: none;
-}
-
-&:error {
-  border-color: var(--danger);
-}
-```
-
-#### Labels
-```css
-font-weight: 600;
-margin-bottom: 8px;
-color: var(--gray-700);
-```
-
-## Ícones
-
-### Sistema de Ícones
-- **Biblioteca**: Material Icons / Font Awesome
-- **Tamanho padrão**: 24px
-- **Cor**: Herdar do contexto ou `--gray-600`
-
-### Ícones por Contexto
-```
-💬 Chat / Conversação
-📊 Análise / Gráficos
-💰 Dinheiro / Valores
-📈 Investimentos / Crescimento
-🔒 Segurança / Privacidade
-⚙️ Configurações
-❓ Ajuda / FAQ
-✅ Sucesso / Confirmação
-⚠️ Alerta / Atenção
-❌ Erro / Cancelar
-```
-
-## Layouts
-
-### Layout Principal (Desktop)
-```
-┌─────────────────────────────────────────────┐
-│ 🏦 Bradesco Assistente IA    👤 ⚙️        │
-├──────────┬──────────────────────────────────┤
-│          │                                  │
-│ Sidebar  │      Área Principal             │
-│          │                                  │
-│ - Chat   │  ┌────────────────────────┐     │
-│ - FAQs   │  │                        │     │
-│ - Calc   │  │   Conteúdo Dinâmico    │     │
-│ - Dados  │  │                        │     │
-│          │  └────────────────────────┘     │
-│          │                                  │
-│          │  [Input de Chat]                │
-└──────────┴──────────────────────────────────┘
-```
-
-### Layout Mobile
-```
-┌─────────────────────┐
-│ ☰  Bradesco IA  👤 │
-├─────────────────────┤
-│                     │
-│   Área Principal    │
-│                     │
-│  ┌───────────────┐  │
-│  │  Conteúdo     │  │
-│  └───────────────┘  │
-│                     │
-│  [Input de Chat]    │
-│                     │
-│ [──────────────]    │ <- Bottom Nav
-└─────────────────────┘
-```
-
-## Interações
-
-### Estados de Loading
-```
-⏳ Processando sua solicitação...
-🔄 Analisando dados...
-💭 Pensando na melhor resposta...
-```
-
-### Feedback Visual
-- **Sucesso**: Toast verde com ícone ✅ (3s)
-- **Erro**: Toast vermelho com ícone ❌ (5s)
-- **Alerta**: Toast amarelo com ícone ⚠️ (4s)
-- **Info**: Toast azul com ícone ℹ️ (3s)
-
-### Animações
-```css
-/* Fade in */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Slide up */
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* Duração recomendada: 200-300ms */
-/* Easing: ease-out ou cubic-bezier(0.4, 0, 0.2, 1) */
+┌─────────────────────────────┐
+│ 💳 Conta Digital            │
+├─────────────────────────────┤
+│ Zero tarifas mensais        │
+│ Cartão sem anuidade         │
+│                             │
+│ [Saiba mais →]              │
+└─────────────────────────────┘
 ```
 
 ## Microinterações
 
-### Hover em Cards
+### Loading States
+- **Typing indicator**: Três pontos animados
+- **Skeleton screens**: Placeholder durante carregamento
+- **Progress bars**: Para processos longos
+
+### Feedback Visual
+- **Hover**: Mudança sutil de cor/sombra
+- **Focus**: Outline azul acessível
+- **Success**: Check verde com fade-in
+- **Error**: Shake animation + mensagem clara
+
+### Transições
 ```css
-transition: transform 0.2s, box-shadow 0.2s;
-
-&:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
+Transição padrão: 200ms ease-in-out
+Fade: opacity 300ms
+Slide: transform 250ms cubic-bezier(0.4, 0, 0.2, 1)
 ```
 
-### Click Feedback
-```css
-&:active {
-  transform: scale(0.98);
-}
+## Mensagens e Tone of Voice
+
+### Características
+- **Amigável**: "Olá! Como posso ajudar você hoje?"
+- **Profissional**: Sem gírias, mas acessível
+- **Empático**: Reconhecer situações do usuário
+- **Educativo**: Explicar quando necessário
+
+### Exemplos
+
+❌ **Evitar**:
+"Erro 404: Recurso não encontrado"
+
+✅ **Preferir**:
+"Ops! Não consegui encontrar essa informação. Que tal reformular sua pergunta?"
+
+❌ **Evitar**:
+"Input inválido"
+
+✅ **Preferir**:
+"Por favor, insira um valor entre R$ 1.000 e R$ 10.000.000"
+
+## Fluxos de Usuário
+
+### 1. Primeira Interação
+```
+1. Boas-vindas automáticas
+2. Breve explicação do que o assistente faz
+3. Sugestões de perguntas iniciais
+4. Campo de entrada em foco
 ```
 
-## Mensagens de Erro
-
-### Formato
+### 2. Consulta de FAQ
 ```
-❌ Ops! Algo deu errado
-
-Não foi possível processar sua solicitação.
-
-O que você pode fazer:
-• Verificar sua conexão com a internet
-• Tentar novamente em alguns instantes
-• Entrar em contato com o suporte
-
-[Tentar Novamente] [Falar com Suporte]
+1. Usuário digita pergunta
+2. Loading indicator (typing...)
+3. Resposta estruturada com:
+   - Resposta direta
+   - Informações complementares
+   - Links úteis (se aplicável)
+4. "Isso respondeu sua dúvida?" [Sim] [Não]
 ```
 
-### Tom de Voz
-- **Empático**: "Entendemos sua frustração..."
-- **Claro**: Explicar o que aconteceu
-- **Acionável**: Oferecer próximos passos
-- **Positivo**: Manter tom otimista
+### 3. Uso de Calculadora
+```
+1. Usuário menciona cálculo
+2. Assistente oferece calculadora específica
+3. Formulário interativo aparece
+4. Validação em tempo real
+5. Resultados com visualização
+6. Opção de salvar/compartilhar
+```
 
-## Acessibilidade (A11Y)
+## Responsividade
+
+### Breakpoints
+```
+Mobile:  < 768px
+Tablet:  768px - 1024px
+Desktop: > 1024px
+```
+
+### Adaptações Mobile
+- Menu hambúrguer
+- Cards em coluna única
+- Botões com altura mínima de 44px
+- Font-size base: 16px (evitar zoom no iOS)
+
+## Acessibilidade (WCAG 2.1)
 
 ### Checklist
-- [ ] Contraste mínimo 4.5:1 para texto normal
-- [ ] Contraste mínimo 3:1 para texto grande
-- [ ] Todos os elementos interativos acessíveis via teclado
-- [ ] Focus indicators visíveis
-- [ ] Alt text para todas as imagens
-- [ ] ARIA labels para elementos dinâmicos
-- [ ] Suporte a leitores de tela
-- [ ] Opção de aumentar fonte
-- [ ] Modo de alto contraste
+- [ ] Contraste mínimo 4.5:1 para texto
+- [ ] Todos os elementos interativos navegáveis por teclado
+- [ ] Alt text em todas as imagens
+- [ ] Labels em todos os inputs
+- [ ] Skip links para navegação
+- [ ] ARIA labels onde necessário
+- [ ] Focus visível em todos os elementos
+- [ ] Sem dependência exclusiva de cor
 
-### Navegação por Teclado
+### Screen Readers
+- Ordem lógica de leitura
+- Landmarks ARIA (navigation, main, aside)
+- Live regions para atualizações dinâmicas
+
+## Animações e Performance
+
+### Princípios
+- **Sutileza**: Animações devem ajudar, não distrair
+- **Performance**: 60fps, usar transform/opacity
+- **Respeitar preferências**: `prefers-reduced-motion`
+
+### Exemplos
+```css
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 ```
-Tab       → Próximo elemento
-Shift+Tab → Elemento anterior
-Enter     → Ativar/Selecionar
-Esc       → Fechar modal/dropdown
-Arrows    → Navegar em listas
-```
-
-## Performance UX
-
-### Tempos de Resposta
-- **Instantâneo**: < 100ms (feedback visual)
-- **Imediato**: < 1s (operações simples)
-- **Aceitável**: < 3s (cálculos complexos)
-- **Crítico**: > 10s (mostrar progresso detalhado)
-
-### Otimizações
-- Lazy loading de imagens
-- Paginação de listas longas
-- Debounce em buscas (300ms)
-- Cache de resultados frequentes
-- Skeleton screens durante loading
-
-## Boas Práticas
-
-### Do's ✅
-- Usar linguagem positiva e encorajadora
-- Fornecer feedback imediato
-- Manter consistência visual
-- Oferecer ajuda contextual
-- Permitir desfazer ações importantes
-
-### Don'ts ❌
-- Usar jargão sem explicação
-- Bloquear a UI sem feedback
-- Forçar ações sem confirmação
-- Esconder informações críticas
-- Ignorar estados de erro
 
 ## Testes de Usabilidade
 
 ### Métricas
-- **Task Success Rate**: % de tarefas completadas
-- **Time on Task**: Tempo médio para completar
-- **Error Rate**: Frequência de erros
-- **Satisfaction**: NPS/CSAT scores
+- **Time to First Interaction**: < 3s
+- **Response Time**: < 2s para respostas simples
+- **Error Rate**: < 5% de erros de usuário
+- **Satisfaction Score**: > 4.5/5
 
-### Ferramentas
-- Hotjar (heatmaps)
-- Google Analytics (eventos)
-- UserTesting (testes remotos)
-- A/B Testing (Optimizely)
+### A/B Testing
+- Variações de mensagens de boas-vindas
+- Posicionamento de CTAs
+- Cores de botões principais
+- Estrutura de respostas do chatbot
 
-## Referências
+## Recursos de Design
 
-- [Material Design Guidelines](https://material.io/design)
-- [Apple Human Interface Guidelines](https://developer.apple.com/design/)
-- [WCAG 2.1](https://www.w3.org/WAI/WCAG21/quickref/)
-- [Nielsen Norman Group](https://www.nngroup.com/)
+### Ícones
+- **Biblioteca**: Lucide Icons / Heroicons
+- **Tamanho padrão**: 24x24px
+- **Estilo**: Outline (linha)
+
+### Ilustrações
+- **Estilo**: Flat, moderno, amigável
+- **Paleta**: Consistente com cores da marca
+- **Uso**: Estados vazios, onboarding, erros
+
+## Documentação para Desenvolvedores
+
+### Componentes Streamlit Customizados
+```python
+# Exemplo de componente de chat
+import streamlit as st
+
+def chat_message(message, is_user=False):
+    alignment = "flex-end" if is_user else "flex-start"
+    bg_color = "#E3F2FD" if is_user else "#F5F5F5"
+    
+    st.markdown(f"""
+    <div style="display: flex; justify-content: {alignment};">
+        <div style="
+            background-color: {bg_color};
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 70%;
+            margin: 8px 0;
+        ">
+            {message}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+```
+
+## Manutenção e Evolução
+
+### Design System (futuro)
+- Componentização completa
+- Storybook para documentação
+- Tokens de design (cores, espaçamentos)
+- Versionamento semântico
+
+### Feedback dos Usuários
+- Coletar feedback após interações
+- Análise de heatmaps
+- Session recordings
+- Pesquisas de satisfação

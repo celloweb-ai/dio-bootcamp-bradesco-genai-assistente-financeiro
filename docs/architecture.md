@@ -2,250 +2,190 @@
 
 ## Visão Geral
 
-O Assistente Financeiro Inteligente é construído com uma arquitetura modular em camadas, permitindo escalabilidade, manutenibilidade e fácil integração de novos componentes.
+O Assistente Financeiro Inteligente é construído com uma arquitetura modular que separa responsabilidades e facilita manutenção e escalabilidade.
 
-## Diagrama de Arquitetura
+## Diagrama de Componentes
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Interface do Usuário                 │
-│                   (Streamlit Web App)                   │
-└────────────────────┬────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────┐
-│                  Camada de Aplicação                    │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
-│  │ Chatbot  │  │  FAQs    │  │Calculator│             │
-│  │ Engine   │  │  System  │  │  Engine  │             │
-│  └──────────┘  └──────────┘  └──────────┘             │
-└────────────────────┬────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────┐
-│                  Camada de Serviços                     │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
-│  │   LLM    │  │ Context  │  │   Data   │             │
-│  │ Service  │  │ Manager  │  │ Analysis │             │
-│  └──────────┘  └──────────┘  └──────────┘             │
-└────────────────────┬────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────┐
-│                  Camada de Dados                        │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
-│  │  SQLite  │  │Knowledge │  │ External │             │
-│  │    DB    │  │   Base   │  │   APIs   │             │
-│  └──────────┘  └──────────┘  └──────────┘             │
-└─────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    Interface (Streamlit)                     │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+        ┌────────┴────────┐
+        │   app.py (Main)  │
+        └────────┬─────────┘
+                 │
+    ┌────────────┼────────────┐
+    │            │            │
+┌───▼───┐   ┌───▼───┐   ┌───▼────┐
+│Chatbot│   │  FAQ  │   │Calcul. │
+└───┬───┘   └───┬───┘   └───┬────┘
+    │           │            │
+    └───────┬───┴────────────┘
+            │
+    ┌───────▼────────┐
+    │ Context Manager │
+    └───────┬─────────┘
+            │
+    ┌───────▼──────────┐
+    │  Data Analysis   │
+    └───────┬──────────┘
+            │
+    ┌───────▼──────────┐
+    │    Database      │
+    └──────────────────┘
 ```
 
-## Componentes Principais
+## Módulos Principais
 
-### 1. Interface do Usuário (UI Layer)
+### 1. Chatbot (`src/chatbot/`)
+**Responsabilidade**: Processamento de linguagem natural e geração de respostas
 
-**Tecnologia**: Streamlit
+- **LLM Integration**: Conexão com OpenAI/Gemini
+- **Prompt Engineering**: Templates otimizados
+- **Response Parser**: Formatação de saídas
 
-**Responsabilidades**:
-- Renderização da interface web
-- Captura de entrada do usuário
-- Exibição de respostas e visualizações
-- Gerenciamento de estado da sessão
+**Tecnologias**:
+- LangChain para orquestração
+- OpenAI GPT-4 / Google Gemini
+- Token management e streaming
 
-### 2. Camada de Aplicação
+### 2. Calculadoras (`src/calculators/`)
+**Responsabilidade**: Cálculos financeiros precisos
 
-#### 2.1 Chatbot Engine
-- Processamento de linguagem natural
-- Interpretação de intenções do usuário
-- Geração de respostas contextualizadas
-- Integração com LLM (OpenAI GPT/Google Gemini)
+**Componentes**:
+- `loan_calculator.py`: Financiamentos (SAC, Price)
+- `investment_calculator.py`: Rentabilidade de investimentos
+- `retirement_calculator.py`: Planejamento de aposentadoria
 
-#### 2.2 FAQ System
-- Busca semântica em base de conhecimento
-- Matching de perguntas e respostas
+### 3. Base de Conhecimento (`src/knowledge_base/`)
+**Responsabilidade**: Gerenciamento de FAQs e documentos
+
+**Funcionalidades**:
+- Busca semântica (embeddings)
 - Ranking de relevância
-- Aprendizado contínuo
+- Cache de respostas frequentes
 
-#### 2.3 Calculator Engine
-- Cálculos financeiros (SAC, Price, Juros Compostos)
-- Simulações de investimento
-- Projeções de aposentadoria
-- Validação de entrada
+### 4. Análise de Dados (`src/data_analysis/`)
+**Responsabilidade**: Insights e visualizações
 
-### 3. Camada de Serviços
-
-#### 3.1 LLM Service
-- Abstração de provedores de IA (OpenAI, Gemini)
-- Gerenciamento de prompts
-- Controle de tokens e custos
-- Fallback entre modelos
-
-#### 3.2 Context Manager
-- Persistência do histórico de conversas
-- Gerenciamento de memória da sessão
-- Recuperação de contexto relevante
-- Limpeza de contexto antigo
-
-#### 3.3 Data Analysis Service
+**Recursos**:
 - Análise de transações
-- Geração de insights
-- Visualizações com Plotly
-- Detecção de padrões
+- Categorização automática
+- Gráficos interativos (Plotly)
+- Relatórios personalizados
 
-### 4. Camada de Dados
+### 5. Gerenciador de Contexto (`src/context_manager.py`)
+**Responsabilidade**: Persistência de conversações
 
-#### 4.1 SQLite Database
-- Armazenamento de conversas
-- Cache de respostas
-- Configurações do usuário
-- Logs de auditoria
+**Características**:
+- Histórico de mensagens
+- Sessões de usuário
+- Memória de curto/longo prazo
 
-#### 4.2 Knowledge Base
-- FAQs estruturadas
-- Documentação de produtos
-- Políticas e regulamentações
-- Embeddings para busca semântica
+### 6. Database (`src/database/`)
+**Responsabilidade**: Persistência de dados
 
-#### 4.3 External APIs
-- APIs bancárias (Open Banking)
-- Cotações de mercado
-- Dados econômicos
-- Serviços de terceiros
+**Estrutura**:
+- SQLite para desenvolvimento
+- Preparado para PostgreSQL em produção
+- Migrations automáticas
 
 ## Fluxo de Dados
 
-### Fluxo de Conversação
-
+### 1. Requisição do Usuário
 ```
-Usuário → Streamlit → Chatbot Engine → LLM Service → Resposta
-                ↓                           ↑
-         Context Manager ←───────────────────┘
-                ↓
-            SQLite DB
-```
-
-### Fluxo de Cálculo
-
-```
-Usuário → Streamlit → Calculator Engine → Validação → Cálculo → Resultado
-                                              ↓
-                                        Data Analysis
-                                              ↓
-                                        Visualização
+Usuário → Interface → Chatbot → Context Manager
+                         ↓
+                    LLM (GPT/Gemini)
+                         ↓
+                    Knowledge Base ← FAQs
+                         ↓
+                    Response Parser
+                         ↓
+                    Interface → Usuário
 ```
 
-## Padrões de Design
-
-### 1. **Singleton Pattern**
-- Usado para gerenciadores de conexão de banco de dados
-- Garante única instância de serviços críticos
-
-### 2. **Factory Pattern**
-- Criação de instâncias de LLM baseado em configuração
-- Permite fácil troca entre provedores
-
-### 3. **Strategy Pattern**
-- Diferentes estratégias de cálculo financeiro
-- Algoritmos de busca em FAQs
-
-### 4. **Observer Pattern**
-- Notificações de eventos da aplicação
-- Logging e monitoramento
+### 2. Cálculo Financeiro
+```
+Usuário → Interface → Calculator Module
+                         ↓
+                    Validation
+                         ↓
+                    Computation
+                         ↓
+                    Data Analysis (charts)
+                         ↓
+                    Interface → Usuário
+```
 
 ## Segurança
 
-### Camadas de Segurança
+### Camadas de Proteção
 
-1. **Autenticação** (planejado)
-   - OAuth 2.0
-   - JWT tokens
-   - Multi-fator authentication
-
-2. **Autorização**
-   - RBAC (Role-Based Access Control)
-   - Políticas de acesso granular
-
-3. **Criptografia**
-   - Dados em repouso (AES-256)
-   - Dados em trânsito (TLS 1.3)
-   - Variáveis de ambiente para secrets
-
-4. **Conformidade**
-   - LGPD (Lei Geral de Proteção de Dados)
-   - Auditoria de acessos
-   - Anonimização de dados
+1. **API Keys**: Variáveis de ambiente (.env)
+2. **Dados Sensíveis**: Criptografia AES-256
+3. **Input Validation**: Sanitização de entradas
+4. **Rate Limiting**: Proteção contra abuso
+5. **LGPD Compliance**: Anonimização de dados
 
 ## Escalabilidade
 
-### Estratégias de Escala
+### Horizontal Scaling
+- Stateless application design
+- Session management via Redis (futuro)
+- Load balancing ready
 
-1. **Horizontal Scaling**
-   - Containerização com Docker
-   - Orquestração com Kubernetes (futuro)
-   - Load balancing
+### Vertical Scaling
+- Caching strategies
+- Database indexing
+- Async operations
 
-2. **Caching**
-   - Cache de respostas frequentes
-   - Redis para sessões (planejado)
-   - CDN para assets estáticos
+## Tecnologias
 
-3. **Otimização de Banco de Dados**
-   - Índices adequados
-   - Particionamento de tabelas
-   - Migração para PostgreSQL (futuro)
+| Camada | Tecnologia | Propósito |
+|--------|-----------|----------|
+| Frontend | Streamlit | Interface web |
+| Backend | Python 3.9+ | Lógica de negócio |
+| LLM | OpenAI/Gemini | IA Generativa |
+| Database | SQLite/PostgreSQL | Persistência |
+| Cache | In-memory/Redis | Performance |
+| Analytics | Pandas/Plotly | Análise de dados |
 
-## Monitoramento e Observabilidade
+## Ambiente de Desenvolvimento
 
-### Métricas
-- Tempo de resposta
-- Taxa de erro
-- Uso de tokens LLM
-- Conversões/interações bem-sucedidas
+```bash
+# Development
+Streamlit local server
+SQLite database
+Debug mode enabled
+
+# Production (futuro)
+Gunicorn + Nginx
+PostgreSQL
+Docker containers
+Kubernetes orchestration
+```
+
+## Monitoramento
+
+### Métricas (futuro)
+- Response time
+- Error rate
+- User satisfaction
+- API usage
+- Cost tracking
 
 ### Logging
-- Logs estruturados (JSON)
-- Níveis: DEBUG, INFO, WARNING, ERROR, CRITICAL
-- Agregação com ELK Stack (planejado)
-
-### Alertas
-- Threshold de erros
-- Latência elevada
-- Consumo excessivo de API
-
-## Tecnologias e Ferramentas
-
-| Camada | Tecnologia | Versão |
-|--------|-----------|--------|
-| Frontend | Streamlit | 1.28+ |
-| Backend | Python | 3.9+ |
-| LLM | OpenAI GPT | 4.0 |
-| LLM Alt | Google Gemini | Pro |
-| Database | SQLite | 3.0 |
-| Analytics | Pandas | 2.0+ |
-| Viz | Plotly | 5.0+ |
-| Testing | Pytest | 7.0+ |
-| CI/CD | GitHub Actions | - |
+- Structured logging (JSON)
+- Error tracking (Sentry)
+- Analytics (Google Analytics)
 
 ## Roadmap Técnico
 
-### Curto Prazo (3 meses)
-- [ ] Integração com Open Banking
-- [ ] Sistema de autenticação
-- [ ] Testes de integração completos
-- [ ] Dockerização
-
-### Médio Prazo (6 meses)
-- [ ] Migração para PostgreSQL
-- [ ] API REST completa
-- [ ] Cache com Redis
-- [ ] Monitoramento com Prometheus
-
-### Longo Prazo (12 meses)
-- [ ] App mobile (React Native)
-- [ ] Kubernetes deployment
-- [ ] Machine Learning personalizado
-- [ ] Multi-tenancy
-
-## Referências
-
-- [Streamlit Documentation](https://docs.streamlit.io/)
-- [OpenAI API Reference](https://platform.openai.com/docs/)
-- [LangChain Documentation](https://python.langchain.com/)
-- [Python Best Practices](https://docs.python-guide.org/)
+- [ ] Microservices architecture
+- [ ] GraphQL API
+- [ ] Real-time updates (WebSockets)
+- [ ] ML models para recomendações
+- [ ] Integration com Open Banking
+- [ ] Mobile app (React Native)

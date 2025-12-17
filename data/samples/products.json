@@ -1,0 +1,37 @@
+{
+  "conta_corrente": {
+    "nome": "Conta Corrente Digital",
+    "descricao": "Conta digital com zero tarifas e cartão de débito",
+    "beneficios": [
+      "Zero tarifas de manutenção",
+      "Cartão de débito sem anuidade",
+      "Transferências ilimitadas",
+      "App completo"
+    ],
+    "requisitos": ["Ser maior de 18 anos", "Ter CPF regular"]
+  },
+  "poupanca": {
+    "nome": "Poupança",
+    "descricao": "Conta poupança com rendimento automático",
+    "rentabilidade": "70% da taxa Selic + TR",
+    "liquidez": "Imediata",
+    "risco": "Baixo"
+  },
+  "cdb": {
+    "nome": "CDB",
+    "descricao": "Certificado de Depósito Bancário",
+    "rentabilidade": "100% a 120% do CDI",
+    "prazo_minimo": "6 meses",
+    "investimento_minimo": 1000,
+    "risco": "Baixo",
+    "garantia": "FGC até R$ 250.000"
+  },
+  "tesouro_selic": {
+    "nome": "Tesouro Selic",
+    "descricao": "Título público pós-fixado",
+    "rentabilidade": "Taxa Selic",
+    "liquidez": "Diária",
+    "investimento_minimo": 30,
+    "risco": "Muito Baixo"
+  }
+}

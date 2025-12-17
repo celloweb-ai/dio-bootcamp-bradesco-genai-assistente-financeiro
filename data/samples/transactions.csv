@@ -1,0 +1,11 @@
+id,date,description,amount,category,type
+1,2024-01-15,Supermercado XYZ,-150.50,alimentacao,debito
+2,2024-01-16,Salário,5000.00,salario,credito
+3,2024-01-17,Conta de luz,-180.00,contas,debito
+4,2024-01-18,Restaurante ABC,-85.00,alimentacao,debito
+5,2024-01-20,Investimento CDB,1000.00,investimento,transferencia
+6,2024-01-22,Uber,-45.00,transporte,debito
+7,2024-01-25,Netflix,-39.90,assinaturas,debito
+8,2024-01-28,Farmácia,-120.00,saude,debito
+9,2024-02-01,Aluguel,-1500.00,moradia,debito
+10,2024-02-05,Freelance,800.00,renda_extra,credito

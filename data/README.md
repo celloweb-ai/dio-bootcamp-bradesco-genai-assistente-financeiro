@@ -1,47 +1,34 @@
-# Diretório de Dados
+# Dados e Datasets
 
-Este diretório contém datasets e arquivos de dados utilizados pelo assistente financeiro.
+Este diretório contém os dados utilizados pelo assistente financeiro.
 
 ## Estrutura
 
 ```
 data/
-├── raw/              # Dados brutos não processados
-├── processed/        # Dados processados e limpos
-├── external/         # Dados de fontes externas
-├── samples/          # Amostras de dados para testes
-└── exports/          # Dados exportados e relatórios
+├── raw/                  # Dados brutos
+├── processed/            # Dados processados
+├── external/             # Dados externos (APIs, etc)
+├── user_data/            # Dados de usuários (gitignored)
+└── samples/              # Dados de exemplo para testes
 ```
 
-## Tipos de Dados
+## Segurança
 
-### Dados de Mercado
-- Cotações de ações
+⚠️ **IMPORTANTE**: Nunca commite dados sensíveis ou pessoais!
+
+- Dados de usuários devem estar em `user_data/` (incluído no .gitignore)
+- Use sempre dados anonimizados para exemplos
+- Respeite a LGPD em todo tratamento de dados
+
+## Datasets Disponíveis
+
+### Samples
+- `samples/transactions.csv` - Transações de exemplo
+- `samples/products.json` - Catálogo de produtos financeiros
+- `samples/faqs.json` - Base de perguntas frequentes
+
+### External
+- Cotações de mercado (via API)
+- Taxas de juros (Banco Central)
 - Índices econômicos
-- Taxas de juros
-- Inflação (IPCA, IGP-M)
-
-### Dados de Produtos
-- Informações de produtos bancários
-- Taxas e tarifas
-- Características de investimentos
-
-### Dados de Usuário (anonimizados)
-- Perfis de investidor
-- Histórico de interações
-- Preferências e configurações
-
-## Segurança e Privacidade
-
-⚠️ **IMPORTANTE**: 
-- Nunca commite dados sensíveis ou pessoais identificáveis
-- Use dados anonimizados ou sintéticos para testes
-- Dados reais devem estar listados no `.gitignore`
-- Siga as diretrizes da LGPD
-
-## Fontes de Dados
-
-- **B3**: Dados de mercado de capitais
-- **Banco Central**: Taxas e indicadores econômicos
-- **IBGE**: Índices de inflação e dados demográficos
-- **CVM**: Informações sobre fundos de investimento
