@@ -1,5 +1,7 @@
 # 🤖 Assistente Financeiro Inteligente com IA Generativa
 
+![Header](./github-header-banner.png)
+
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DIO](https://img.shields.io/badge/Bootcamp-DIO%20Bradesco-orange.svg)](https://dio.me)
